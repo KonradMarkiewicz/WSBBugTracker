@@ -9,14 +9,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexController {
 
     @GetMapping("/")
-    public String index(
-            @RequestParam(name = "parameter")
-            String parameter,
-            Model model){
-        model.addAttribute("name","myszojeleń");
-        double number = 12+32+23.2;
-        model.addAttribute("number", number);
-        model.addAttribute("parameter", parameter);
+    public String index(){
+//            @RequestParam(name = "parameter")
+//            String parameter,
+//            Model model){
+//
+//        model.addAttribute("name","myszojeleń");
+//        double number = 12+32+23.2;
+//        model.addAttribute("number", number);
+//        model.addAttribute("parameter", parameter);
         return "index";
+    }
+
+    @GetMapping("/contact")
+    public String contact(){
+        return "contact";
     }
 }
