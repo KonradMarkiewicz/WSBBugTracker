@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org">
+<head>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header">
+    <div class="container">
+        <a class="navbar-brand" href="#">WSB BugTracker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="nav navbar-nav menu left">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/users">Użytkownicy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/contact">Kontakt</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form th:action="@{/logout}" method="post" class="form-inline">
+                    <input type="submit" th:value="#{login.logout}" class="btn btn-secondary"/>
+                </form>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

@@ -3,26 +3,28 @@ package com.wsb.WSBBugTracker;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
+    private final static String INDEX_VIEW_NAME = "index";
+    private final static String CONTACT_VIEW_NAME = "contact";
+    private final static String USERS_VIEW_NAME = "users";
 
     @GetMapping("/")
-    public String index(){
-//            @RequestParam(name = "parameter")
-//            String parameter,
-//            Model model){
-//
-//        model.addAttribute("name","myszojeleń");
-//        double number = 12+32+23.2;
-//        model.addAttribute("number", number);
-//        model.addAttribute("parameter", parameter);
-        return "index";
+    public String index(Model model){
+        model.addAttribute("isAdmin",true);
+        model.addAttribute("message", "wiadomość");
+        model.addAttribute("type", "typ");
+        return INDEX_VIEW_NAME;
     }
 
     @GetMapping("/contact")
     public String contact(){
-        return "contact";
+        return CONTACT_VIEW_NAME;
+    }
+
+    @GetMapping("/users")
+    public String users(){
+        return USERS_VIEW_NAME;
     }
 }
