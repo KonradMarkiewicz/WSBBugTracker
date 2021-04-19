@@ -2,16 +2,16 @@ package com.wsb.WSBBugTracker.auth;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class Person {
 
     @Id
@@ -36,4 +36,10 @@ public class Person {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     Set<Authority> authorities;
+
+    public Person(String username, String password, String name) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
 }

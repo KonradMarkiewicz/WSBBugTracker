@@ -2,6 +2,7 @@ package com.wsb.WSBBugTracker.config;
 
 import com.wsb.WSBBugTracker.auth.Authority;
 import com.wsb.WSBBugTracker.auth.AuthorityRepository;
+import com.wsb.WSBBugTracker.auth.PersonService;
 import com.wsb.WSBBugTracker.enums.AuthorityName;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
@@ -10,27 +11,30 @@ import org.springframework.stereotype.Service;
 public class Bootstrap implements InitializingBean {
 
     private final AuthorityRepository authorityRepository;
+    private final PersonService personService;
 
-    public Bootstrap(AuthorityRepository authorityRepository) {
+    public Bootstrap(AuthorityRepository authorityRepository, PersonService personService) {
         this.authorityRepository = authorityRepository;
+        this.personService = personService;
     }
 
-    public void afterPropertiesSet() throws Exception {
+    @Override
+    public void afterPropertiesSet() {
         System.out.println("Rozpoczynamy przygotowywanie aplikacji...");
 
         prepareAuthorities();
+
+        personService.prepareAdminUser();
     }
 
     private void prepareAuthorities() {
-        for (AuthorityName authorityName : AuthorityName.values()) {
-            Authority existingAuthority = authorityRepository.findByName(authorityName);
+        for (AuthorityName name : AuthorityName.values()) {
+            Authority existingAuthority = authorityRepository.findByName(name);
+            if (existingAuthority == null) {
+                Authority authority = new Authority(name);
 
-            if (existingAuthority != null) {
-                continue;
+                authorityRepository.save(authority);
             }
-
-            Authority newAuthority = new Authority(authorityName);
-            authorityRepository.save(newAuthority);
         }
     }
 }
