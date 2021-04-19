@@ -37,8 +37,7 @@ public class PersonService {
 
         System.out.println("Tworzymy administratora: " + myAdminUsername + "...");
 
-        String hashedPassword = bCryptPasswordEncoder.encode(myAdminPassword);
-        Person person = new Person(myAdminUsername, hashedPassword, "Administrator");
+        Person person = new Person(myAdminUsername, myAdminPassword, "Administrator");
 
         List<Authority> authorities = (List<Authority>) authorityRepository.findAll();
         person.setAuthorities(new HashSet<>(authorities));
