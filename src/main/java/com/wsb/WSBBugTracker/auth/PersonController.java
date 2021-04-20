@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/people")
+@RequestMapping("/users")
 public class PersonController {
 
     private final PersonService personService;
@@ -22,16 +22,16 @@ public class PersonController {
 
     @GetMapping("/")
     @Secured("ROLE_USERS_TAB")
-    ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("people/index");
-        modelAndView.addObject("people", personService.findAllUsers());
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("users/index");
+        modelAndView.addObject("users", personService.findAllUsers());
         return modelAndView;
     }
 
     @GetMapping("/create")
     @Secured("ROLE_CREATE_USER")
     ModelAndView create() {
-        ModelAndView modelAndView = new ModelAndView("people/create");
+        ModelAndView modelAndView = new ModelAndView("users/create");
         modelAndView.addObject("person", new Person());
         return modelAndView;
     }
@@ -42,7 +42,7 @@ public class PersonController {
         ModelAndView modelAndView = new ModelAndView();
 
         personService.savePerson(person);
-        modelAndView.setViewName("redirect:/people/");
+        modelAndView.setViewName("redirect:/users/");
 
         return modelAndView;
     }

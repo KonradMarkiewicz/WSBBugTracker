@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
+      layout:decorate="~{layouts/loggedInLayout}">
+<head>
+    <title>Użytkownicy</title>
+</head>
+
+<body>
+<section class="container">
+    <div layout:fragment="content">
+        <h1>
+            Użytkownicy
+        </h1>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Login
+                </th>
+                <th>
+                    Nazwa
+                </th>
+            </tr>
+            </thead>
+            <tr th:each="person : ${users}">
+                <td th:text="${person.id}"></td>
+                <td th:text="${person.username}"></td>
+                <td th:text="${person.name}"></td>
+            </tr>
+        </table>
+    </div>
+
+</section>
+</body>
+</html>
