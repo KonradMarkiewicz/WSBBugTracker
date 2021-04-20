@@ -8,13 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
     private final static String INDEX_VIEW_NAME = "index";
     private final static String CONTACT_VIEW_NAME = "contact";
-    private final static String USERS_VIEW_NAME = "users";
+    private final static String USERS_VIEW_NAME = "users/index";
 
     @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("isAdmin",true);
-        model.addAttribute("message", "wiadomość");
-        model.addAttribute("type", "typ");
+    public String index(){
         return INDEX_VIEW_NAME;
     }
 
