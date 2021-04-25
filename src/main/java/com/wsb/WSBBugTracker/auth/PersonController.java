@@ -20,11 +20,12 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Secured("ROLE_USERS_TAB")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("users/index");
         modelAndView.addObject("users", personService.findAllUsers());
+
         return modelAndView;
     }
 
@@ -33,6 +34,7 @@ public class PersonController {
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("users/create");
         modelAndView.addObject("person", new Person());
+
         return modelAndView;
     }
 
@@ -40,9 +42,8 @@ public class PersonController {
     @Secured("ROLE_CREATE_USER")
     ModelAndView createNewUser(@Valid @ModelAttribute Person person) {
         ModelAndView modelAndView = new ModelAndView();
-
         personService.savePerson(person);
-        modelAndView.setViewName("redirect:/users/");
+        modelAndView.setViewName("redirect:/users");
 
         return modelAndView;
     }

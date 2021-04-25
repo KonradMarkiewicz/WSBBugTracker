@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
+      layout:decorate="~{layouts/loggedInLayout}">
+<head>
+    <title th:text="#{create.title}"></title>
+</head>
+
+<body>
+<section class="container">
+    <div layout:fragment="content">
+        <h2 th:text="#{create.label}"></h2>
+
+        <form th:action="@{/users/save}" th:object="${person}" method="post">
+            <div class="row">
+                <div class="mb-3">
+                    <div>
+                        <label for="username" class="form-label" th:text="#{create.username}"></label>
+                    </div>
+                    <div>
+                        <input id="username"
+                               type="text"
+                               th:field="*{username}"
+                               placeholder="jkowalski"
+                               class="form-control"
+                               />
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <div>
+                        <label for="name" class="form-label" th:text="#{create.name}"></label>
+                    </div>
+                    <div>
+                        <input id="name"
+                               type="text"
+                               th:field="*{name}"
+                               placeholder="Jan Kowalski"
+                               class="form-control"
+                               />
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div>
+                        <label for="password" class="form-label" th:text="#{create.password}"></label>
+                    </div>
+                    <div>
+                        <input id="password"
+                               type="password"
+                               th:field="*{password}"
+                               placeholder="janko123"
+                               class="form-control"
+                               />
+
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" th:text="#{create.save}"></button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
