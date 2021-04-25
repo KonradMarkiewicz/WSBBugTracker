@@ -12,7 +12,7 @@
     <div layout:fragment="content">
         <h2 th:text="#{create.label}"></h2>
 
-        <form th:action="@{/users/save}" th:object="${person}" method="post">
+        <form th:action="@{/users/save}" th:object="${person}" method="post" class="needs-validation" novalidate>
             <div class="row">
                 <div class="mb-3">
                     <div>
@@ -24,9 +24,10 @@
                                th:field="*{username}"
                                placeholder="jkowalski"
                                class="form-control"
+                               required
                                />
+                        <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
-
                 </div>
 
                 <div class="mb-3">
@@ -39,8 +40,9 @@
                                th:field="*{name}"
                                placeholder="Jan Kowalski"
                                class="form-control"
+                               required
                                />
-
+                        <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
 
@@ -54,10 +56,13 @@
                                th:field="*{password}"
                                placeholder="janko123"
                                class="form-control"
+                               minlength="8"
+                               required
                                />
-
+                        <div class="invalid-feedback" th:text="#{create.minLength}"></div>
                     </div>
                 </div>
+
             </div>
 
             <div>

@@ -2,6 +2,7 @@ package com.wsb.WSBBugTracker.auth;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +41,13 @@ public class PersonController {
 
     @PostMapping(value = "/save")
     @Secured("ROLE_CREATE_USER")
-    ModelAndView createNewUser(@Valid @ModelAttribute Person person) {
+    ModelAndView createNewUser(@Valid @ModelAttribute Person person, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
+        if (result.hasErrors()) {
+            modelAndView.setViewName("users/create");
+
+            return modelAndView;
+        }
         personService.savePerson(person);
         modelAndView.setViewName("redirect:/users");
 
