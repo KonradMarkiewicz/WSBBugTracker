@@ -10,9 +10,12 @@
 <body>
 <section class="container">
     <div layout:fragment="content">
-        <h1>
-            Użytkownicy
-        </h1>
+
+        <h2 th:text="#{users.label}"></h2>
+
+        <a th:href="@{'/users/create/'}"
+           th:text="#{users.create}"
+           class="btn btn-primary"></a>
 
         <table class="table table-striped">
             <thead>

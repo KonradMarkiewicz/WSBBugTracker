@@ -2,10 +2,8 @@ package com.wsb.WSBBugTracker.auth;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -20,11 +18,12 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Secured("ROLE_USERS_TAB")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("users/index");
         modelAndView.addObject("users", personService.findAllUsers());
+
         return modelAndView;
     }
 
@@ -33,16 +32,21 @@ public class PersonController {
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("users/create");
         modelAndView.addObject("person", new Person());
+
         return modelAndView;
     }
 
     @PostMapping(value = "/save")
     @Secured("ROLE_CREATE_USER")
-    ModelAndView createNewUser(@Valid @ModelAttribute Person person) {
+    ModelAndView createNewUser(@Valid @ModelAttribute Person person, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
+        if (result.hasErrors()) {
+            modelAndView.setViewName("users/create");
 
+            return modelAndView;
+        }
         personService.savePerson(person);
-        modelAndView.setViewName("redirect:/users/");
+        modelAndView.setViewName("redirect:/users");
 
         return modelAndView;
     }
