@@ -37,7 +37,7 @@ public class PersonService {
 
         System.out.println("Tworzymy administratora: " + myAdminUsername + "...");
 
-        Person person = new Person(myAdminUsername, myAdminPassword, "Administrator");
+        Person person = new Person(myAdminUsername, myAdminPassword, "Administrator","test@test.pl");
 
         List<Authority> authorities = (List<Authority>) authorityRepository.findAll();
         person.setAuthorities(new HashSet<>(authorities));

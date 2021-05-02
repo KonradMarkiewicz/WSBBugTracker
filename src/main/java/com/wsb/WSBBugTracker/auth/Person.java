@@ -28,6 +28,9 @@ public class Person {
     String name;
 
     @Column(nullable = false)
+    String email;
+
+    @Column(nullable = false)
     @ColumnDefault(value = "true")
     Boolean enabled = true;
 
@@ -37,9 +40,10 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     Set<Authority> authorities;
 
-    public Person(String username, String password, String name) {
+    public Person(String username, String password, String name, String email) {
         this.username = username;
         this.password = password;
         this.name = name;
+        this.email = email;
     }
 }

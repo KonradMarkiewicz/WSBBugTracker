@@ -11,50 +11,44 @@
 <section class="container">
     <div layout:fragment="content">
 
-        <div>
-            <div>
-                <h2 th:text="#{users.label}"></h2>
-            </div>
-            <div>
+        <h2 class="row">
+            <div class="inner">
+                <label th:text="#{users.label}"></label>
                 <a th:href="@{'/users/create/'}"
                    th:text="#{users.create}"
                    class="btn btn-primary"></a>
             </div>
-        </div>
+        </h2>
 
+        <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info">
+            <span th:text="#{users.create.success}"></span>
+        </div>
         <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-info">
             <span th:text="#{users.delete.success}"></span>
         </div>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Login
-            </th>
-            <th>
-                Nazwa
-            </th>
-            <th>
-                Usuń
-            </th>
-        </tr>
-        </thead>
-        <tr th:each="person : ${users}">
-            <td th:text="${person.id}"></td>
-            <td th:text="${person.username}"></td>
-            <td th:text="${person.name}"></td>
-            <td><a class="btn btn-danger"
-                   th:text="#{users.delete}"
-                   th:href="@{users/delete/{id}(id=${person.id})}"></a>
-            </td>
-        </tr>
-    </table>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th th:text="#{create.username}"></th>
+                <th th:text="#{create.name}"></th>
+                <th th:text="#{create.email}"></th>
+                <th th:text="#{users.delete}"></th>
+            </tr>
+            </thead>
+            <tr th:each="person : ${users}">
+                <td th:text="${personStat.count}"></td>
+                <td th:text="${person.username}"></td>
+                <td th:text="${person.name}"></td>
+                <td th:text="${person.email}"></td>
+                <td><a class="btn btn-danger"
+                       th:text="#{users.delete}"
+                       th:href="@{users/delete/{id}(id=${person.id})}"></a>
+                </td>
+            </tr>
+        </table>
     </div>
-
 </section>
 </body>
 </html>
