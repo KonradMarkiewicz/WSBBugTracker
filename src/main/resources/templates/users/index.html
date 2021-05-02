@@ -30,7 +30,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th th:text="Id"></th>
+                <th>#</th>
                 <th th:text="#{create.username}"></th>
                 <th th:text="#{create.name}"></th>
                 <th th:text="#{create.email}"></th>
@@ -38,7 +38,7 @@
             </tr>
             </thead>
             <tr th:each="person : ${users}">
-                <td th:text="${person.id}"></td>
+                <td th:text="${personStat.count}"></td>
                 <td th:text="${person.username}"></td>
                 <td th:text="${person.name}"></td>
                 <td th:text="${person.email}"></td>
