@@ -22,10 +22,6 @@
             </div>
         </div>
 
-        <div th:if="${#strings.toString(param.attribute)} == 'success'" class="alert alert-info">
-            <span th:text="#{users.create}"></span>
-        </div>
-
         <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-info">
             <span th:text="#{users.delete.success}"></span>
         </div>
