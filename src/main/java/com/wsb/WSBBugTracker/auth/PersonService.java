@@ -59,6 +59,11 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    protected Person editPerson(Long id){
+        return personRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
+    }
+
     List<Person> findAllUsers() {
         return personRepository.findAll();
     }

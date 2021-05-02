@@ -4,7 +4,7 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedInLayout}">
 <head>
-    <title>Użytkownicy</title>
+    <title th:text="#{users.label}"></title>
 </head>
 
 <body>
@@ -26,6 +26,10 @@
         <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-info">
             <span th:text="#{users.delete.success}"></span>
         </div>
+        <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-info">
+            <span th:text="#{users.update.success}"></span>
+        </div>
+
 
         <table class="table table-striped">
             <thead>
@@ -34,7 +38,8 @@
                 <th th:text="#{create.username}"></th>
                 <th th:text="#{create.name}"></th>
                 <th th:text="#{create.email}"></th>
-                <th th:text="#{users.delete}"></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tr th:each="person : ${users}">
@@ -42,9 +47,19 @@
                 <td th:text="${person.username}"></td>
                 <td th:text="${person.name}"></td>
                 <td th:text="${person.email}"></td>
-                <td><a class="btn btn-danger"
-                       th:text="#{users.delete}"
-                       th:href="@{users/delete/{id}(id=${person.id})}"></a>
+                <td>
+                    <div class="pull-right">
+                        <a class="btn btn-success"
+                           th:text="#{users.edit}"
+                           th:href="@{users/edit/{id}(id=${person.id})}">
+                        </a>
+                        <a class="btn btn-danger"
+                           th:text="#{users.delete}"
+                           th:href="@{users/delete/{id}(id=${person.id})}">
+                        </a>
+                    </div>
+                </td>
+                <td>
                 </td>
             </tr>
         </table>
