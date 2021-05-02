@@ -11,7 +11,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="nav navbar-nav menu left">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/users">Użytkownicy</a>
                 </li>
@@ -19,11 +19,11 @@
                     <a class="nav-link" aria-current="page" href="/contact">Kontakt</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <nav class="nav navbar-nav justify-content-center float-md-end">
                 <form th:action="@{/logout}" method="post" class="form-inline">
                     <input type="submit" th:value="#{login.logout}" class="btn btn-secondary"/>
                 </form>
-            </ul>
+            </nav>
         </div>
     </div>
 </nav>

@@ -11,32 +11,48 @@
 <section class="container">
     <div layout:fragment="content">
 
-        <h2 th:text="#{users.label}"></h2>
+        <div>
+            <div>
+                <h2 th:text="#{users.label}"></h2>
+            </div>
+            <div>
+                <a th:href="@{'/users/create/'}"
+                   th:text="#{users.create}"
+                   class="btn btn-primary"></a>
+            </div>
+        </div>
 
-        <a th:href="@{'/users/create/'}"
-           th:text="#{users.create}"
-           class="btn btn-primary"></a>
+        <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-info">
+            <span th:text="#{users.delete.success}"></span>
+        </div>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Login
-                </th>
-                <th>
-                    Nazwa
-                </th>
-            </tr>
-            </thead>
-            <tr th:each="person : ${users}">
-                <td th:text="${person.id}"></td>
-                <td th:text="${person.username}"></td>
-                <td th:text="${person.name}"></td>
-            </tr>
-        </table>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Login
+            </th>
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Usuń
+            </th>
+        </tr>
+        </thead>
+        <tr th:each="person : ${users}">
+            <td th:text="${person.id}"></td>
+            <td th:text="${person.username}"></td>
+            <td th:text="${person.name}"></td>
+            <td><a class="btn btn-danger"
+                   th:text="#{users.delete}"
+                   th:href="@{users/delete/{id}(id=${person.id})}"></a>
+            </td>
+        </tr>
+    </table>
     </div>
 
 </section>
