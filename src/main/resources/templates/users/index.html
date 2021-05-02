@@ -42,20 +42,24 @@
                 <th></th>
             </tr>
             </thead>
-            <tr th:each="person : ${users}">
-                <td th:text="${personStat.count}"></td>
-                <td th:text="${person.username}"></td>
-                <td th:text="${person.name}"></td>
-                <td th:text="${person.email}"></td>
+            <tr th:each="user : ${users}">
+                <td th:text="${userStat.count}"></td>
+                <td>
+                    <a th:href="@{users/{id}(id=${user.id})}"
+                       th:text="${user.username}"
+                       th:onclick=""></a>
+                </td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
                 <td>
                     <div class="pull-right">
                         <a class="btn btn-success"
                            th:text="#{users.edit}"
-                           th:href="@{users/edit/{id}(id=${person.id})}">
+                           th:href="@{users/edit/{id}(id=${user.id})}">
                         </a>
                         <a class="btn btn-danger"
                            th:text="#{users.delete}"
-                           th:href="@{users/delete/{id}(id=${person.id})}">
+                           th:href="@{users/delete/{id}(id=${user.id})}">
                         </a>
                     </div>
                 </td>

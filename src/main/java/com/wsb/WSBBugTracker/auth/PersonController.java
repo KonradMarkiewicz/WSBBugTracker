@@ -47,6 +47,7 @@ public class PersonController {
 
             return modelAndView;
         }
+        personService.addAuthorities(person);
         personService.savePerson(person);
         attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/users");
@@ -65,8 +66,9 @@ public class PersonController {
         return modelAndView;
     }
 
-    @GetMapping("edit/{id}")
-    ModelAndView showUpdateForm(@ModelAttribute @PathVariable("id") Long id) {
+    @GetMapping("/edit/{id}")
+    @Secured("ROLE_EDIT_USER")
+    ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("users/edit");
         modelAndView.addObject("user", personService.editPerson(id));
 
@@ -74,6 +76,7 @@ public class PersonController {
     }
 
     @PostMapping("/update/{id}")
+    @Secured("ROLE_EDIT_USER")
     ModelAndView updateUser(@PathVariable("id") Long id, @Valid Person person,
                              BindingResult result, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
@@ -86,6 +89,15 @@ public class PersonController {
         personService.savePerson(person);
         attributes.addAttribute("update", "success");
         modelAndView.setViewName("redirect:/users");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}")
+    @Secured("ROLE_USERS_TAB")
+    ModelAndView showUserDetails(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("users/details");
+        modelAndView.addObject("user", personService.editPerson(id));
 
         return modelAndView;
     }
