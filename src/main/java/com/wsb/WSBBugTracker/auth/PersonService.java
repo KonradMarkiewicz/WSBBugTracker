@@ -52,7 +52,18 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    protected void deletePerson(Long id) {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        person.setEnabled(false);
+        personRepository.save(person);
+    }
+
     List<Person> findAllUsers() {
         return personRepository.findAll();
+    }
+
+    List<Person> findAllEnabledUsers() {
+        return (List<Person>) personRepository.findPersonByEnabledIsTrue();
     }
 }
