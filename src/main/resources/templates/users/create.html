@@ -12,7 +12,8 @@
     <div layout:fragment="content">
         <h2 th:text="#{create.label}"></h2>
 
-        <form th:action="@{/users/save}" th:object="${person}" method="post" class="needs-validation" novalidate>
+        <form th:action="@{/users/save}" th:object="${person}" method="post"
+              class="needs-validation" novalidate>
             <div class="row">
                 <div class="mb-3">
                     <div>
@@ -29,7 +30,6 @@
                         <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
-
                 <div class="mb-3">
                     <div>
                         <label for="name" class="form-label" th:text="#{create.name}"></label>
@@ -45,7 +45,21 @@
                         <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
-
+                <div class="mb-3">
+                    <div>
+                        <label for="name" class="form-label" th:text="#{create.email}"></label>
+                    </div>
+                    <div>
+                        <input id="email"
+                               type="text"
+                               th:field="*{email}"
+                               placeholder="email@example.com"
+                               class="form-control"
+                               required
+                        />
+                        <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <div>
                         <label for="password" class="form-label" th:text="#{create.password}"></label>
@@ -62,11 +76,10 @@
                         <div class="invalid-feedback" th:text="#{create.minLength}"></div>
                     </div>
                 </div>
-
             </div>
-
-            <div>
-                <button type="submit" class="btn btn-primary" onclick="validate();" th:text="#{create.save}"></button>
+            <div class="inner pull-right">
+                    <button type="submit" class="btn btn-primary" onclick="validate();" th:text="#{create.save}"></button>
+                    <button type="button" class="btn btn-secondary" onclick="history.back();" th:text="#{create.cancel}"></button>
             </div>
         </form>
     </div>

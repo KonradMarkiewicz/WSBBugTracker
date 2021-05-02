@@ -22,14 +22,9 @@ public class PersonController {
 
     @GetMapping()
     @Secured("ROLE_USERS_TAB")
-    public ModelAndView index(ModelMap model,
-                              @ModelAttribute("flashAttribute") Object flashAttribute) {
-        ModelAndView modelAndView = new ModelAndView("users/index", model);
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("users/index");
         modelAndView.addObject("users", personService.findAllEnabledUsers());
-
-        if (flashAttribute.equals("delete")){
-            model.addAttribute("delete", flashAttribute);
-        }
 
         return modelAndView;
     }
@@ -45,7 +40,8 @@ public class PersonController {
 
     @PostMapping(value = "/save")
     @Secured("ROLE_CREATE_USER")
-    ModelAndView createNewUser(@Valid @ModelAttribute Person person, BindingResult result) {
+    ModelAndView createNewUser(@Valid @ModelAttribute Person person, BindingResult result,
+                               RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("users/create");
@@ -53,6 +49,7 @@ public class PersonController {
             return modelAndView;
         }
         personService.savePerson(person);
+        attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/users");
 
         return modelAndView;
@@ -63,10 +60,9 @@ public class PersonController {
     ModelAndView deleteUser(@ModelAttribute @PathVariable("id") Long id, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         personService.deletePerson(id);
-        attributes.addFlashAttribute("flashAttribute", "delete");
         attributes.addAttribute("delete", "success");
-
         modelAndView.setViewName("redirect:/users");
+
         return modelAndView;
     }
 }
