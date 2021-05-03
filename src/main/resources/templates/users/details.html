@@ -53,6 +53,20 @@
                         />
                     </div>
                 </div>
+                <div class="mb-3">
+                    <div>
+                        <label for="roles" class="form-label" th:text="#{create.roles}"></label>
+                    </div>
+                    <div th:each="role : ${authorities}">
+                        <input id="roles"
+                               type="checkbox"
+                               th:value="${role.id}"
+                               th:field="*{authorities}"
+                               disabled
+                        />
+                        <label th:text="${role.name}"></label>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

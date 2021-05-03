@@ -33,6 +33,7 @@ public class PersonController {
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("users/create");
         modelAndView.addObject("user", new Person());
+        modelAndView.addObject("authorities", personService.addAuthorities());
 
         return modelAndView;
     }
@@ -47,7 +48,7 @@ public class PersonController {
 
             return modelAndView;
         }
-        personService.addAuthorities(person);
+        modelAndView.addObject("authorities", personService.addAuthorities());
         personService.savePerson(person);
         attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/users");
@@ -71,6 +72,7 @@ public class PersonController {
     ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("users/edit");
         modelAndView.addObject("user", personService.editPerson(id));
+        modelAndView.addObject("authorities", personService.addAuthorities());
 
         return modelAndView;
     }
@@ -86,6 +88,7 @@ public class PersonController {
 
             return modelAndView;
         }
+        modelAndView.addObject("authorities", personService.addAuthorities());
         personService.savePerson(person);
         attributes.addAttribute("update", "success");
         modelAndView.setViewName("redirect:/users");
@@ -98,6 +101,7 @@ public class PersonController {
     ModelAndView showUserDetails(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("users/details");
         modelAndView.addObject("user", personService.editPerson(id));
+        modelAndView.addObject("authorities", personService.addAuthorities());
 
         return modelAndView;
     }
