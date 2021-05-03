@@ -10,7 +10,16 @@
 <body>
 <section class="container">
     <div layout:fragment="content">
-        <h2 th:text="#{users.details}"></h2>
+        <h2 class="row">
+            <div class="inner">
+                <label th:text="#{users.details}"></label>
+                <a class="btn btn-success"
+                   th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
+                   th:text="#{users.edit}"
+                   th:href="@{edit/{id}(id=${user.id})}">
+                </a>
+            </div>
+        </h2>
 
         <form th:object="${user}">
             <div class="row">
@@ -24,7 +33,7 @@
                                th:field="*{username}"
                                class="form-control"
                                disabled
-                               />
+                        />
                     </div>
                 </div>
                 <div class="mb-3">
@@ -37,7 +46,7 @@
                                th:field="*{name}"
                                class="form-control"
                                disabled
-                               />
+                        />
                     </div>
                 </div>
                 <div class="mb-3">
@@ -69,7 +78,8 @@
                 </div>
             </div>
             <div class="inner pull-right">
-                <button type="button" class="btn btn-secondary" onclick="history.back();" th:text="#{create.cancel}"></button>
+                <button type="button" class="btn btn-secondary" onclick="history.back();"
+                        th:text="#{create.cancel}"></button>
             </div>
         </form>
     </div>
