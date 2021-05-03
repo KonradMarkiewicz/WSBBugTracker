@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
+      layout:decorate="~{layouts/loggedInLayout}">
+<head>
+    <title th:title="#{error.title}"></title>
+</head>
+<body>
+<section class="container">
+    <div layout:fragment="content">
+        <h3 style="margin-top: 50px; text-align: center;"
+            th:text="#{error.404}"></h3>
+    </div>
+</section>
+</body>
+</html>
