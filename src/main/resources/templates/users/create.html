@@ -26,7 +26,7 @@
                                placeholder="jkowalski"
                                class="form-control"
                                required
-                               />
+                        />
                         <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                                placeholder="Jan Kowalski"
                                class="form-control"
                                required
-                               />
+                        />
                         <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
@@ -72,14 +72,28 @@
                                class="form-control"
                                minlength="8"
                                required
-                               />
+                        />
                         <div class="invalid-feedback" th:text="#{create.minLength}"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div>
+                        <label for="roles" class="form-label" th:text="#{create.roles}"></label>
+                    </div>
+                    <div th:each="role : ${authorities}">
+                        <input id="roles"
+                               type="checkbox"
+                               th:value="${role.id}"
+                               th:field="*{authorities}"
+                        />
+                        <label th:text="${role.name}"></label>
                     </div>
                 </div>
             </div>
             <div class="inner pull-right">
-                    <button type="submit" class="btn btn-primary" onclick="validate();" th:text="#{create.save}"></button>
-                    <button type="button" class="btn btn-secondary" onclick="history.back();" th:text="#{create.cancel}"></button>
+                <button type="submit" class="btn btn-primary" onclick="validate();" th:text="#{create.save}"></button>
+                <button type="button" class="btn btn-secondary" onclick="history.back();"
+                        th:text="#{create.cancel}"></button>
             </div>
         </form>
     </div>

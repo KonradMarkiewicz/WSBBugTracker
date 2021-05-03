@@ -52,6 +52,10 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    protected List<Authority> addAuthorities() {
+        return (List<Authority>) authorityRepository.findAll();
+    }
+
     protected void deletePerson(Long id) {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
