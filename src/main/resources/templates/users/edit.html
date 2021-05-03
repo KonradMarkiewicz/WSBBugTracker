@@ -26,7 +26,7 @@
                                placeholder="jkowalski"
                                class="form-control"
                                required
-                               />
+                        />
                         <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                                placeholder="Jan Kowalski"
                                class="form-control"
                                required
-                               />
+                        />
                         <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                                class="form-control"
                                minlength="8"
                                required
-                               />
+                        />
                         <div class="invalid-feedback" th:text="#{create.minLength}"></div>
                     </div>
                 </div>
@@ -91,8 +91,21 @@
                 </div>
             </div>
             <div class="inner pull-right">
-                    <button type="submit" class="btn btn-primary" onclick="validate();" th:text="#{create.save}"></button>
-                    <button type="button" class="btn btn-secondary" onclick="history.back();" th:text="#{create.cancel}"></button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        onclick="validate();"
+                        th:text="#{create.save}">
+                </button>
+                <button class="btn btn-danger"
+                        th:if="${#authorization.expression('hasRole(''ROLE_DELETE_USER'')')}"
+                        th:text="#{users.delete}"
+                        th:href="@{users/delete/{id}(id=${user.id})}">
+                </button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        onclick="history.back();"
+                        th:text="#{create.cancel}">
+                </button>
             </div>
         </form>
     </div>
