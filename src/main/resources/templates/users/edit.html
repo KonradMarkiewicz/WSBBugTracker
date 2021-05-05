@@ -96,13 +96,12 @@
                         onclick="validate();"
                         th:text="#{create.save}">
                 </button>
-                <button class="btn btn-danger"
-                        th:if="${#authorization.expression('hasRole(''ROLE_DELETE_USER'')')}"
-                        th:text="#{users.delete}"
-                        th:href="@{users/delete/{id}(id=${user.id})}">
-                </button>
-                <button type="button"
-                        class="btn btn-secondary"
+                <a class="btn btn-danger"
+                   th:if="${#authorization.expression('hasRole(''ROLE_DELETE_USER'')')}"
+                   th:text="#{users.delete}"
+                   th:href="@{../delete/{id}(id=${user.id})}">
+                </a>
+                <button class="btn btn-secondary"
                         onclick="history.back();"
                         th:text="#{create.cancel}">
                 </button>
