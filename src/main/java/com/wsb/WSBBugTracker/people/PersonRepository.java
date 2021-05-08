@@ -1,4 +1,4 @@
-package com.wsb.WSBBugTracker.auth;
+package com.wsb.WSBBugTracker.people;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

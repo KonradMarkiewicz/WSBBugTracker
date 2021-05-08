@@ -1,6 +1,6 @@
 package com.wsb.WSBBugTracker.config;
 
-import com.wsb.WSBBugTracker.auth.CustomUserDetailsService;
+import com.wsb.WSBBugTracker.people.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

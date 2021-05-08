@@ -2,7 +2,7 @@ package com.wsb.WSBBugTracker.config;
 
 import com.wsb.WSBBugTracker.auth.Authority;
 import com.wsb.WSBBugTracker.auth.AuthorityRepository;
-import com.wsb.WSBBugTracker.auth.PersonService;
+import com.wsb.WSBBugTracker.people.PersonService;
 import com.wsb.WSBBugTracker.enums.AuthorityName;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;

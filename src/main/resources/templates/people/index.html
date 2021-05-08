@@ -4,7 +4,7 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedInLayout}">
 <head>
-    <title th:text="#{users.label}"></title>
+    <title th:text="#{people.label}"></title>
 </head>
 
 <body>
@@ -13,9 +13,9 @@
 
         <h2 class="row">
             <div class="inner">
-                <label th:text="#{users.label}"></label>
-                <a th:href="@{'/users/create/'}"
-                   th:text="#{users.create}"
+                <label th:text="#{people.label}"></label>
+                <a th:href="@{'/people/create/'}"
+                   th:text="#{people.create}"
                    class="btn btn-primary"
                    th:if="${#authorization.expression('hasRole(''ROLE_CREATE_USER'')')}">
                 </a>
@@ -23,13 +23,13 @@
         </h2>
 
         <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info">
-            <span th:text="#{users.create.success}"></span>
+            <span th:text="#{people.create.success}"></span>
         </div>
         <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-danger">
-            <span th:text="#{users.delete.success}"></span>
+            <span th:text="#{people.delete.success}"></span>
         </div>
         <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-success">
-            <span th:text="#{users.update.success}"></span>
+            <span th:text="#{people.update.success}"></span>
         </div>
 
 
@@ -37,29 +37,28 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th th:text="#{users.createUser.username}"></th>
-                <th th:text="#{users.createUser.name}"></th>
-                <th th:text="#{users.createUser.email}"></th>
+                <th th:text="#{people.createPerson.username}"></th>
+                <th th:text="#{people.createPerson.name}"></th>
+                <th th:text="#{people.createPerson.email}"></th>
                 <th></th>
                 <th></th>
             </tr>
             </thead>
-            <tr th:each="user : ${users}">
-                <td th:text="${userStat.count}"></td>
+            <tr th:each="person : ${people}">
+                <td th:text="${personStat.count}"></td>
                 <td>
-                    <a th:href="@{users/{id}(id=${user.id})}"
-                       th:text="${user.username}"
+                    <a th:href="@{people/{id}(id=${person.id})}"
+                       th:text="${person.username}"
                        th:onclick=""></a>
                 </td>
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.email}"></td>
+                <td th:text="${person.name}"></td>
+                <td th:text="${person.email}"></td>
                 <td>
                     <div class="pull-right">
                         <a class="btn btn-success"
                            th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
-                           th:text="#{users.edit}"
-                           th:href="@{users/edit/{id}(id=${user.id})}">
-                        </a>
+                           th:text="#{people.edit}"
+                           th:href="@{people/edit/{id}(id=${person.id})}"></a>
                     </div>
                 </td>
                 <td>

@@ -4,12 +4,13 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedInLayout}">
 <head>
-    <title>Strona główna</title>
+    <title th:text="#{index.label}"></title>
 </head>
 <body>
 <section class="container">
     <div layout:fragment="content">
-
+        <h3 style="margin-top: 50px; text-align: center;"
+            th:text="#{index.text}"></h3>
     </div>
 </section>
 </body>

@@ -4,7 +4,7 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedInLayout}">
 <head>
-    <title th:text="#{users.details}"></title>
+    <title th:text="#{people.details}"></title>
 </head>
 
 <body>
@@ -12,12 +12,11 @@
     <div layout:fragment="content">
         <h2 class="row">
             <div class="inner">
-                <label th:text="#{users.details}"></label>
+                <label th:text="#{people.details}"></label>
                 <a class="btn btn-success"
                    th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
-                   th:text="#{users.edit}"
-                   th:href="@{edit/{id}(id=${person.id})}">
-                </a>
+                   th:text="#{people.edit}"
+                   th:href="@{edit/{id}(id=${person.id})}"></a>
             </div>
         </h2>
 
@@ -27,68 +26,64 @@
                     <div>
                         <label for="username"
                                class="form-label"
-                               th:text="#{users.createUser.username}"></label>
+                               th:text="#{people.createPerson.username}"></label>
                     </div>
                     <div>
                         <input id="username"
                                type="text"
                                th:field="*{username}"
                                class="form-control"
-                               disabled
-                        />
+                               disabled/>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{users.createUser.name}"></label>
+                               th:text="#{people.createPerson.name}"></label>
                     </div>
                     <div>
                         <input id="name"
                                type="text"
                                th:field="*{name}"
                                class="form-control"
-                               disabled
-                        />
+                               disabled/>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{users.createUser.email}"></label>
+                               th:text="#{people.createPerson.email}"></label>
                     </div>
                     <div>
                         <input id="email"
                                type="text"
                                th:field="*{email}"
                                class="form-control"
-                               disabled
-                        />
+                               disabled/>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="roles"
+                        <h5 for="roles"
                                class="form-label"
-                               th:text="#{users.createUser.authorities}"></label>
+                               th:text="#{people.createPerson.authorities}"></h5>
                     </div>
                     <div th:each="authority : ${authorities}">
                         <input id="roles"
                                type="checkbox"
                                th:value="${authority.id}"
                                th:field="*{authorities}"
-                               disabled
-                        />
+                               disabled/>
                         <label th:text="#{${'authority.' + authority.name}}"></label>
                     </div>
                 </div>
             </div>
             <div class="inner pull-right">
                 <a class="btn btn-secondary"
-                   th:href="@{/users}"
-                   th:text="#{users.createUser.cancel}"></a>
+                   th:href="@{/people}"
+                   th:text="#{people.createPerson.cancel}"></a>
             </div>
         </form>
     </div>

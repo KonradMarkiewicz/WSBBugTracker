@@ -1,6 +1,6 @@
 package com.wsb.WSBBugTracker.validators;
 
-import com.wsb.WSBBugTracker.auth.Person;
+import com.wsb.WSBBugTracker.people.Person;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

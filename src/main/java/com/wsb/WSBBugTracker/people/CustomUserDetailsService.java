@@ -1,5 +1,6 @@
-package com.wsb.WSBBugTracker.auth;
+package com.wsb.WSBBugTracker.people;
 
+import com.wsb.WSBBugTracker.auth.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -45,7 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private List<GrantedAuthority> getUserAuthorities(Person person) {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Authority authority : person.authorities) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(authority.name.toString()));
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName().toString()));
         }
         return new ArrayList<>(grantedAuthorities);
     }

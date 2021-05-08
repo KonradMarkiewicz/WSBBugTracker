@@ -1,5 +1,7 @@
-package com.wsb.WSBBugTracker.auth;
+package com.wsb.WSBBugTracker.people;
 
+import com.wsb.WSBBugTracker.auth.Authority;
+import com.wsb.WSBBugTracker.auth.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

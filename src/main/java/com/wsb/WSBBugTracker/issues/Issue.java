@@ -1,7 +1,7 @@
 package com.wsb.WSBBugTracker.issues;
 
 import com.wsb.WSBBugTracker.enums.State;
-import com.wsb.WSBBugTracker.auth.Person;
+import com.wsb.WSBBugTracker.people.Person;
 import com.wsb.WSBBugTracker.projects.Project;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

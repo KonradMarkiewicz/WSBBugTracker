@@ -1,5 +1,6 @@
-package com.wsb.WSBBugTracker.auth;
+package com.wsb.WSBBugTracker.people;
 
+import com.wsb.WSBBugTracker.auth.Authority;
 import com.wsb.WSBBugTracker.validators.UniqueUsername;
 import com.wsb.WSBBugTracker.validators.ValidPasswords;
 import lombok.Getter;

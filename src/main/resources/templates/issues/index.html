@@ -17,7 +17,7 @@
             </div>
         </h2>
 
-        <form th:action="@{/issue}"
+        <form th:action="@{/issues}"
               th:object="${filter}">
             <div class="row">
                 <div class="col-auto">
@@ -36,9 +36,9 @@
                             class="form-control">
                         <option th:value="${null}"
                                 th:text="#{assignee.placeholder}"></option>
-                        <option th:each="user : ${users}"
-                                th:value="${user.id}"
-                                th:text="${user.name}"></option>
+                        <option th:each="person : ${people}"
+                                th:value="${person.id}"
+                                th:text="${person.name}"></option>
                     </select>
                 </div>
                 <div class="col-auto">
@@ -55,7 +55,7 @@
                     <button class="btn btn-primary"
                             type="submit"
                             th:text="#{common.search}"></button>
-                    <a th:href="@{/issue}"
+                    <a th:href="@{/issues}"
                        th:text="#{common.clear}"
                        class="btn btn-dark bg-dark"></a>
                 </div>
