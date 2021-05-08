@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
+      layout:decorate="~{layouts/loggedInLayout}">
+<head>
+    <title th:text="#{issues.label}"></title>
+</head>
+
+<body>
+<section class="container">
+    <div layout:fragment="content">
+
+        <h2 class="row">
+            <div class="inner">
+                <label th:text="#{issues.label}"></label>
+            </div>
+        </h2>
+
+        <form th:action="@{/issue}"
+              th:object="${filter}">
+            <div class="row">
+                <div class="col-auto">
+                    <select th:field="*{project}"
+                            class="form-control">
+                        <option th:value="${null}"
+                                th:text="#{project.placeholder}">
+                        </option>
+                        <option th:each="project : ${projects}"
+                                th:value="${project.id}"
+                                th:text="${project.name}"></option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <select th:field="*{assignee}"
+                            class="form-control">
+                        <option th:value="${null}"
+                                th:text="#{assignee.placeholder}"></option>
+                        <option th:each="user : ${users}"
+                                th:value="${user.id}"
+                                th:text="${user.name}"></option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <select th:field="*{state}"
+                            class="form-control">
+                        <option th:value="${null}"
+                                th:text="#{state.placeholder}"></option>
+                        <option th:each="state : ${states}"
+                                th:value="${state}"
+                                th:text="${#messages.msg('state.' + state)}"></option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary"
+                            type="submit"
+                            th:text="#{common.search}"></button>
+                    <a th:href="@{/issue}"
+                       th:text="#{common.clear}"
+                       class="btn btn-dark bg-dark"></a>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th th:text="#{issues.project.name}"></th>
+                <th th:text="#{issues.issue.title}"></th>
+                <th th:text="#{issues.assignee}"></th>
+                <th th:text="#{issues.state}"></th>
+            </tr>
+            </thead>
+            <tr th:each="issue : ${issues}">
+                <td th:text="${issue.id}"></td>
+                <td th:text="${issue.project.name}"></td>
+                <td th:text="${issue.title}"></td>
+                <td th:if="${issue.assignee != null}"
+                    th:text="${issue.assignee.name}"></td>
+                <td th:text="#{${'state.' + issue.state}}"></td>
+            </tr>
+        </table>
+    </div>
+</section>
+</body>
+</html>
