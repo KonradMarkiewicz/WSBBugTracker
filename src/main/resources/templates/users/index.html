@@ -25,10 +25,10 @@
         <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info">
             <span th:text="#{users.create.success}"></span>
         </div>
-        <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-info">
+        <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-danger">
             <span th:text="#{users.delete.success}"></span>
         </div>
-        <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-info">
+        <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-success">
             <span th:text="#{users.update.success}"></span>
         </div>
 
@@ -37,9 +37,9 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th th:text="#{create.username}"></th>
-                <th th:text="#{create.name}"></th>
-                <th th:text="#{create.email}"></th>
+                <th th:text="#{users.createUser.username}"></th>
+                <th th:text="#{users.createUser.name}"></th>
+                <th th:text="#{users.createUser.email}"></th>
                 <th></th>
                 <th></th>
             </tr>
