@@ -4,96 +4,127 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedInLayout}">
 <head>
-    <title th:text="#{create.label}"></title>
+    <title th:text="#{users.createUser.label}"></title>
 </head>
 
 <body>
 <section class="container">
     <div layout:fragment="content">
-        <h2 th:text="#{create.label}"></h2>
+        <h2 th:text="#{users.createUser.label}"></h2>
 
-        <form th:action="@{/users/save}" th:object="${user}" method="post"
-              class="needs-validation" novalidate>
+        <form th:action="@{/users/save}"
+              th:object="${person}"
+              method="post">
             <div class="row">
                 <div class="mb-3">
                     <div>
-                        <label for="username" class="form-label" th:text="#{create.username}"></label>
+                        <label for="username"
+                               class="form-label"
+                               th:text="#{users.createUser.username}"></label>
                     </div>
                     <div>
                         <input id="username"
                                type="text"
                                th:field="*{username}"
                                placeholder="jkowalski"
-                               class="form-control"
-                               required
-                        />
-                        <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
+                               th:class="'form-control ' + ${#fields.hasErrors('username') ? 'is-invalid' : ''}"/>
+                        <small class="text-danger"
+                               th:if="${#fields.hasErrors('username')}"
+                               th:errors="*{username}"></small>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="name" class="form-label" th:text="#{create.name}"></label>
+                        <label for="name"
+                               class="form-label"
+                               th:text="#{users.createUser.name}"></label>
                     </div>
                     <div>
                         <input id="name"
                                type="text"
                                th:field="*{name}"
                                placeholder="Jan Kowalski"
-                               class="form-control"
-                               required
-                        />
-                        <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
+                               th:class="'form-control ' + ${#fields.hasErrors('name') ? 'is-invalid' : ''}"/>
+                        <small class="text-danger"
+                               th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}"></small>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="name" class="form-label" th:text="#{create.email}"></label>
+                        <label for="name"
+                               class="form-label"
+                               th:text="#{users.createUser.email}"></label>
                     </div>
                     <div>
                         <input id="email"
                                type="text"
                                th:field="*{email}"
                                placeholder="email@example.com"
-                               class="form-control"
-                               required
-                        />
-                        <div class="invalid-feedback" th:text="#{create.notEmpty}"></div>
+                               th:class="'form-control ' + ${#fields.hasErrors('email') ? 'is-invalid' : ''}"/>
+                        <small class="text-danger"
+                               th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"></small>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="password" class="form-label" th:text="#{create.password}"></label>
+                        <label for="password"
+                               class="form-label"
+                               th:text="#{users.createUser.password}">
+                        </label>
                     </div>
                     <div>
                         <input id="password"
                                type="password"
                                th:field="*{password}"
                                placeholder="janko123"
-                               class="form-control"
-                               minlength="8"
-                               required
-                        />
-                        <div class="invalid-feedback" th:text="#{create.minLength}"></div>
+                               th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+                        <small class="text-danger"
+                               th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"></small>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="roles" class="form-label" th:text="#{create.roles}"></label>
+                        <label for="repeated-password"
+                               class="form-label"
+                               th:text="#{users.createUser.repeatedPassword}">
+                        </label>
                     </div>
-                    <div th:each="role : ${authorities}">
-                        <input id="roles"
+                    <div>
+                        <input id="repeated-password"
+                               type="password"
+                               th:field="*{repeatedPassword}"
+                               placeholder="janko123"
+                               th:class="'form-control ' + ${#fields.hasErrors('repeatedPassword') ? 'is-invalid' : ''}"/>
+                        <small class="text-danger"
+                               th:if="${#fields.hasErrors('repeatedPassword')}"
+                               th:errors="*{repeatedPassword}"></small>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div>
+                        <h4 class="form-label"
+                               th:text="#{users.createUser.authorities}"></h4>
+                    </div>
+                    <div th:each="authority : ${authorities}">
+                        <input name="authorities"
                                type="checkbox"
-                               th:value="${role.id}"
-                               th:field="*{authorities}"
-                        />
-                        <label th:text="${role.name}"></label>
+                               th:value="${authority.id}"
+                               th:field="*{authorities}"/>
+                        <label th:text="#{${'authority.' + authority.name}}"
+                               th:for="${#ids.prev('authorities')}"></label>
                     </div>
                 </div>
             </div>
             <div class="inner pull-right">
-                <button type="submit" class="btn btn-primary" onclick="validate();" th:text="#{create.save}"></button>
-                <button type="button" class="btn btn-secondary" onclick="history.back();"
-                        th:text="#{create.cancel}"></button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        th:text="#{users.createUser.save}"></button>
+                <a class="btn btn-secondary"
+                   th:href="@{/users}"
+                   th:text="#{users.createUser.cancel}"></a>
             </div>
         </form>
     </div>

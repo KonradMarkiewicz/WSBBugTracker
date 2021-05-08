@@ -16,16 +16,18 @@
                 <a class="btn btn-success"
                    th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
                    th:text="#{users.edit}"
-                   th:href="@{edit/{id}(id=${user.id})}">
+                   th:href="@{edit/{id}(id=${person.id})}">
                 </a>
             </div>
         </h2>
 
-        <form th:object="${user}">
+        <form th:object="${person}">
             <div class="row">
                 <div class="mb-3">
                     <div>
-                        <label for="username" class="form-label" th:text="#{create.username}"></label>
+                        <label for="username"
+                               class="form-label"
+                               th:text="#{users.createUser.username}"></label>
                     </div>
                     <div>
                         <input id="username"
@@ -38,7 +40,9 @@
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="name" class="form-label" th:text="#{create.name}"></label>
+                        <label for="name"
+                               class="form-label"
+                               th:text="#{users.createUser.name}"></label>
                     </div>
                     <div>
                         <input id="name"
@@ -51,7 +55,9 @@
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="name" class="form-label" th:text="#{create.email}"></label>
+                        <label for="name"
+                               class="form-label"
+                               th:text="#{users.createUser.email}"></label>
                     </div>
                     <div>
                         <input id="email"
@@ -64,22 +70,25 @@
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label for="roles" class="form-label" th:text="#{create.roles}"></label>
+                        <label for="roles"
+                               class="form-label"
+                               th:text="#{users.createUser.authorities}"></label>
                     </div>
-                    <div th:each="role : ${authorities}">
+                    <div th:each="authority : ${authorities}">
                         <input id="roles"
                                type="checkbox"
-                               th:value="${role.id}"
+                               th:value="${authority.id}"
                                th:field="*{authorities}"
                                disabled
                         />
-                        <label th:text="${role.name}"></label>
+                        <label th:text="#{${'authority.' + authority.name}}"></label>
                     </div>
                 </div>
             </div>
             <div class="inner pull-right">
-                <button type="button" class="btn btn-secondary" onclick="history.back();"
-                        th:text="#{create.cancel}"></button>
+                <a class="btn btn-secondary"
+                   th:href="@{/users}"
+                   th:text="#{users.createUser.cancel}"></a>
             </div>
         </form>
     </div>

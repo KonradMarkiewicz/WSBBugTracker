@@ -52,7 +52,7 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    protected List<Authority> addAuthorities() {
+    protected List<Authority> findAuthorities() {
         return (List<Authority>) authorityRepository.findAll();
     }
 

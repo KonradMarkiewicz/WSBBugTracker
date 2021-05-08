@@ -32,23 +32,25 @@ public class PersonController {
     @Secured("ROLE_CREATE_USER")
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("users/create");
-        modelAndView.addObject("user", new Person());
-        modelAndView.addObject("authorities", personService.addAuthorities());
+        modelAndView.addObject("authorities", personService.findAuthorities());
+        modelAndView.addObject("person", new Person());
 
         return modelAndView;
     }
 
     @PostMapping("/save")
     @Secured("ROLE_CREATE_USER")
-    ModelAndView createNewUser(@Valid @ModelAttribute Person person, BindingResult result,
+    ModelAndView createNewUser(@ModelAttribute @Valid Person person, BindingResult result,
                                RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("users/create");
+            modelAndView.addObject("authorities", personService.findAuthorities());
+            modelAndView.addObject("person", person);
 
             return modelAndView;
         }
-        modelAndView.addObject("authorities", personService.addAuthorities());
+
         personService.savePerson(person);
         attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/users");
@@ -71,8 +73,8 @@ public class PersonController {
     @Secured("ROLE_EDIT_USER")
     ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("users/edit");
-        modelAndView.addObject("user", personService.editPerson(id));
-        modelAndView.addObject("authorities", personService.addAuthorities());
+        modelAndView.addObject("authorities", personService.findAuthorities());
+        modelAndView.addObject("person", personService.editPerson(id));
 
         return modelAndView;
     }
@@ -83,12 +85,13 @@ public class PersonController {
                              BindingResult result, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
+            modelAndView.addObject("authorities", personService.findAuthorities());
             person.setId(id);
             modelAndView.setViewName("users/edit");
 
             return modelAndView;
         }
-        modelAndView.addObject("authorities", personService.addAuthorities());
+
         personService.savePerson(person);
         attributes.addAttribute("update", "success");
         modelAndView.setViewName("redirect:/users");
@@ -100,8 +103,8 @@ public class PersonController {
     @Secured("ROLE_USERS_TAB")
     ModelAndView showUserDetails(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("users/details");
-        modelAndView.addObject("user", personService.editPerson(id));
-        modelAndView.addObject("authorities", personService.addAuthorities());
+        modelAndView.addObject("authorities", personService.findAuthorities());
+        modelAndView.addObject("person", personService.editPerson(id));
 
         return modelAndView;
     }

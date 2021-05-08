@@ -44,14 +44,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails userDetails = User.withDefaultPasswordEncoder()
-//                .username("wsb")
-//                .password("1234")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
 }
