@@ -1,4 +1,4 @@
-package com.wsb.WSBBugTracker.auth;
+package com.wsb.WSBBugTracker.people;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/people")
 public class PersonController {
 
     private final PersonService personService;
@@ -22,8 +22,8 @@ public class PersonController {
     @GetMapping()
     @Secured("ROLE_USERS_TAB")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("users/index");
-        modelAndView.addObject("users", personService.findAllEnabledUsers());
+        ModelAndView modelAndView = new ModelAndView("people/index");
+        modelAndView.addObject("people", personService.findAllEnabledUsers());
 
         return modelAndView;
     }
@@ -31,7 +31,7 @@ public class PersonController {
     @GetMapping("/create")
     @Secured("ROLE_CREATE_USER")
     ModelAndView create() {
-        ModelAndView modelAndView = new ModelAndView("users/create");
+        ModelAndView modelAndView = new ModelAndView("people/create");
         modelAndView.addObject("authorities", personService.findAuthorities());
         modelAndView.addObject("person", new Person());
 
@@ -44,7 +44,7 @@ public class PersonController {
                                RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
-            modelAndView.setViewName("users/create");
+            modelAndView.setViewName("people/create");
             modelAndView.addObject("authorities", personService.findAuthorities());
             modelAndView.addObject("person", person);
 
@@ -53,7 +53,7 @@ public class PersonController {
 
         personService.savePerson(person);
         attributes.addAttribute("create", "success");
-        modelAndView.setViewName("redirect:/users");
+        modelAndView.setViewName("redirect:/people");
 
         return modelAndView;
     }
@@ -64,7 +64,7 @@ public class PersonController {
         ModelAndView modelAndView = new ModelAndView();
         personService.deletePerson(id);
         attributes.addAttribute("delete", "success");
-        modelAndView.setViewName("redirect:/users");
+        modelAndView.setViewName("redirect:/people");
 
         return modelAndView;
     }
@@ -72,7 +72,7 @@ public class PersonController {
     @GetMapping("/edit/{id}")
     @Secured("ROLE_EDIT_USER")
     ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("users/edit");
+        ModelAndView modelAndView = new ModelAndView("people/edit");
         modelAndView.addObject("authorities", personService.findAuthorities());
         modelAndView.addObject("person", personService.editPerson(id));
 
@@ -87,14 +87,14 @@ public class PersonController {
         if (result.hasErrors()) {
             modelAndView.addObject("authorities", personService.findAuthorities());
             person.setId(id);
-            modelAndView.setViewName("users/edit");
+            modelAndView.setViewName("people/edit");
 
             return modelAndView;
         }
 
         personService.savePerson(person);
         attributes.addAttribute("update", "success");
-        modelAndView.setViewName("redirect:/users");
+        modelAndView.setViewName("redirect:/people");
 
         return modelAndView;
     }
@@ -102,7 +102,7 @@ public class PersonController {
     @GetMapping("/{id}")
     @Secured("ROLE_USERS_TAB")
     ModelAndView showUserDetails(@ModelAttribute @PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("users/details");
+        ModelAndView modelAndView = new ModelAndView("people/details");
         modelAndView.addObject("authorities", personService.findAuthorities());
         modelAndView.addObject("person", personService.editPerson(id));
 

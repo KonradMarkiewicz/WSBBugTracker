@@ -4,15 +4,14 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedOutLayout}">
 <head>
-    <title>Kontakt</title>
+    <title th:text="#{contact.label}"></title>
 </head>
 <body>
 <section class="container">
-
     <div layout:fragment="content">
-        <h1>
+        <h2>
             Kontakt
-        </h1>
+        </h2>
 
         <div>
             Konrad Markiewicz -- konrad.markiewicz@gmail.com

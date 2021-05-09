@@ -1,6 +1,6 @@
 package com.wsb.WSBBugTracker.issues;
 
-import com.wsb.WSBBugTracker.auth.PersonRepository;
+import com.wsb.WSBBugTracker.people.PersonRepository;
 import com.wsb.WSBBugTracker.enums.State;
 import com.wsb.WSBBugTracker.projects.ProjectRepository;
 import org.springframework.security.access.annotation.Secured;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/issue")
+@RequestMapping("/issues")
 public class IssueController {
 
     final com.wsb.WSBBugTracker.issues.IssueRepository issueRepository;
-    final com.wsb.WSBBugTracker.auth.PersonRepository personRepository;
+    final PersonRepository personRepository;
     final com.wsb.WSBBugTracker.projects.ProjectRepository projectRepository;
 
     public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository) {
@@ -27,10 +27,10 @@ public class IssueController {
     @GetMapping
     @Secured("ROLE_ISSUES_TAB")
     ModelAndView index(@ModelAttribute IssueFilter issueFilter) {
-        ModelAndView modelAndView = new ModelAndView("issue/index");
+        ModelAndView modelAndView = new ModelAndView("issues/index");
         modelAndView.addObject("issues", issueRepository.findAll(issueFilter.buildQuery()));
         modelAndView.addObject("projects", projectRepository.findAll());
-        modelAndView.addObject("users", personRepository.findAll());
+        modelAndView.addObject("people", personRepository.findAll());
         modelAndView.addObject("states", State.values());
         modelAndView.addObject("filter", issueFilter);
 

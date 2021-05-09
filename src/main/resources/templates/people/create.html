@@ -4,15 +4,15 @@
       xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
       layout:decorate="~{layouts/loggedInLayout}">
 <head>
-    <title th:text="#{users.edit.label}"></title>
+    <title th:text="#{people.createPerson.label}"></title>
 </head>
 
 <body>
 <section class="container">
     <div layout:fragment="content">
-        <h2 th:text="#{users.edit.label}"></h2>
+        <h2 th:text="#{people.createPerson.label}"></h2>
 
-        <form th:action="@{/users/update/{id}(id=${person.id})}"
+        <form th:action="@{/people/save}"
               th:object="${person}"
               method="post">
             <div class="row-cols-1">
@@ -20,7 +20,7 @@
                     <div>
                         <label for="username"
                                class="form-label"
-                               th:text="#{users.createUser.username}"></label>
+                               th:text="#{people.createPerson.username}"></label>
                     </div>
                     <div>
                         <input id="username"
@@ -37,7 +37,7 @@
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{users.createUser.name}"></label>
+                               th:text="#{people.createPerson.name}"></label>
                     </div>
                     <div>
                         <input id="name"
@@ -54,7 +54,7 @@
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{users.createUser.email}"></label>
+                               th:text="#{people.createPerson.email}"></label>
                     </div>
                     <div>
                         <input id="email"
@@ -71,8 +71,7 @@
                     <div>
                         <label for="password"
                                class="form-label"
-                               th:text="#{users.createUser.password}">
-                        </label>
+                               th:text="#{people.createPerson.password}"></label>
                     </div>
                     <div>
                         <input id="password"
@@ -89,8 +88,7 @@
                     <div>
                         <label for="repeated-password"
                                class="form-label"
-                               th:text="#{users.createUser.repeatedPassword}">
-                        </label>
+                               th:text="#{people.createPerson.repeatedPassword}"></label>
                     </div>
                     <div>
                         <input id="repeated-password"
@@ -105,8 +103,8 @@
                 </div>
                 <div class="mb-3">
                     <div>
-                        <label class="form-label"
-                               th:text="#{users.createUser.authorities}"></label>
+                        <h5 class="form-label"
+                               th:text="#{people.createPerson.authorities}"></h5>
                     </div>
                     <div th:each="authority : ${authorities}">
                         <input name="authorities"
@@ -115,21 +113,16 @@
                                th:field="*{authorities}"/>
                         <label th:text="#{${'authority.' + authority.name}}"
                                th:for="${#ids.prev('authorities')}"></label>
-
                     </div>
                 </div>
             </div>
             <div class="inner pull-right">
                 <button type="submit"
                         class="btn btn-primary"
-                        th:text="#{users.createUser.save}"></button>
-                <a class="btn btn-danger"
-                   th:if="${#authorization.expression('hasRole(''ROLE_DELETE_USER'')')}"
-                   th:text="#{users.delete}"
-                   th:href="@{../delete/{id}(id=${person.id})}"></a>
+                        th:text="#{people.createPerson.save}"></button>
                 <a class="btn btn-secondary"
-                   th:href="@{/users}"
-                   th:text="#{users.createUser.cancel}"></a>
+                   th:href="@{/people}"
+                   th:text="#{people.createPerson.cancel}"></a>
             </div>
         </form>
     </div>
