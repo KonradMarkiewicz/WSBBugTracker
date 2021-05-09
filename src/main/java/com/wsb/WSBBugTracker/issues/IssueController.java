@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/issues")
 public class IssueController {
 
-    final com.wsb.WSBBugTracker.issues.IssueRepository issueRepository;
+    final IssueRepository issueRepository;
     final PersonRepository personRepository;
-    final com.wsb.WSBBugTracker.projects.ProjectRepository projectRepository;
+    final ProjectRepository projectRepository;
 
     public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository) {
         this.issueRepository = issueRepository;

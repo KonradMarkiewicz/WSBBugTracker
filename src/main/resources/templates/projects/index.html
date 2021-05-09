@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
+      layout:decorate="~{layouts/loggedInLayout}">
+<head>
+    <title th:text="#{projects.label}"></title>
+</head>
+<body>
+<section class="container">
+    <div layout:fragment="content">
+
+        <h2 class="row">
+            <div class="inner">
+                <label th:text="#{projects.label}"></label>
+                <a th:href="@{'/projects/create/'}"
+                   th:text="#{projects.create}"
+                   class="btn btn-primary btn-sm"
+                   th:if="${#authorization.expression('hasRole(''ROLE_CREATE_PROJECT'')')}">
+                </a>
+            </div>
+        </h2>
+
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th th:text="#{project.name}"></th>
+            </tr>
+            </thead>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.id}"></td>
+                <td th:text="${project.name}"></td>
+            </tr>
+        </table>
+
+    </div>
+</section>
+</body>
+</html>

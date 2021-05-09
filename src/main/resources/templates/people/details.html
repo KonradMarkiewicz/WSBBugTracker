@@ -13,7 +13,7 @@
         <h2 class="row">
             <div class="inner">
                 <label th:text="#{people.details}"></label>
-                <a class="btn btn-success"
+                <a class="btn btn-success btn-sm"
                    th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
                    th:text="#{people.edit}"
                    th:href="@{edit/{id}(id=${person.id})}"></a>
