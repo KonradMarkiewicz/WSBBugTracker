@@ -16,7 +16,7 @@
                 <label th:text="#{people.label}"></label>
                 <a th:href="@{'/people/create/'}"
                    th:text="#{people.create}"
-                   class="btn btn-primary"
+                   class="btn btn-primary btn-sm"
                    th:if="${#authorization.expression('hasRole(''ROLE_CREATE_USER'')')}">
                 </a>
             </div>
@@ -33,7 +33,7 @@
         </div>
 
 
-        <table class="table table-striped">
+        <table class="table table-striped table-dark">
             <thead>
             <tr>
                 <th>#</th>
@@ -55,7 +55,7 @@
                 <td th:text="${person.email}"></td>
                 <td>
                     <div class="pull-right">
-                        <a class="btn btn-success"
+                        <a class="btn btn-success btn-sm"
                            th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
                            th:text="#{people.edit}"
                            th:href="@{people/edit/{id}(id=${person.id})}"></a>
