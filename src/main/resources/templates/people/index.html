@@ -15,7 +15,7 @@
             <div class="inner">
                 <label th:text="#{people.label}"></label>
                 <a th:href="@{'/people/create/'}"
-                   th:text="#{people.create}"
+                   th:text="#{common.create}"
                    class="btn btn-primary btn-sm"
                    th:if="${#authorization.expression('hasRole(''ROLE_CREATE_USER'')')}">
                 </a>
@@ -57,7 +57,7 @@
                     <div class="pull-right">
                         <a class="btn btn-success btn-sm"
                            th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
-                           th:text="#{people.edit}"
+                           th:text="#{common.edit}"
                            th:href="@{people/edit/{id}(id=${person.id})}"></a>
                     </div>
                 </td>

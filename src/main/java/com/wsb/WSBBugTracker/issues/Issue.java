@@ -1,5 +1,7 @@
 package com.wsb.WSBBugTracker.issues;
 
+import com.wsb.WSBBugTracker.enums.Priority;
+import com.wsb.WSBBugTracker.enums.Type;
 import com.wsb.WSBBugTracker.enums.State;
 import com.wsb.WSBBugTracker.people.Person;
 import com.wsb.WSBBugTracker.projects.Project;
@@ -31,6 +33,14 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     State state = State.TODO;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    Priority priority = Priority.LOW;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    Type type = Type.TASK;
+
     @ManyToOne()
     @JoinColumn(name = "assignee_id")
     Person assignee;
@@ -38,6 +48,5 @@ public class Issue {
     @ManyToOne(optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     Project project;
-
 
 }

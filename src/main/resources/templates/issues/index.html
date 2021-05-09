@@ -14,6 +14,11 @@
         <h2 class="row">
             <div class="inner">
                 <label th:text="#{issues.label}"></label>
+                <a th:href="@{'/issues/create/'}"
+                   th:text="#{common.create}"
+                   class="btn btn-primary btn-sm"
+                   th:if="${#authorization.expression('hasRole(''ROLE_CREATE_ISSUE'')')}">
+                </a>
             </div>
         </h2>
 
@@ -66,8 +71,8 @@
             <thead>
             <tr>
                 <th>Id</th>
-                <th th:text="#{issues.project.name}"></th>
-                <th th:text="#{issues.issue.title}"></th>
+                <th th:text="#{issues.project}"></th>
+                <th th:text="#{issues.title}"></th>
                 <th th:text="#{issues.assignee}"></th>
                 <th th:text="#{issues.state}"></th>
             </tr>

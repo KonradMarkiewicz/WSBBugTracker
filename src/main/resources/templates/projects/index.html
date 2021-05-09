@@ -14,7 +14,7 @@
             <div class="inner">
                 <label th:text="#{projects.label}"></label>
                 <a th:href="@{'/projects/create/'}"
-                   th:text="#{projects.create}"
+                   th:text="#{common.create}"
                    class="btn btn-primary btn-sm"
                    th:if="${#authorization.expression('hasRole(''ROLE_CREATE_PROJECT'')')}">
                 </a>
