@@ -119,14 +119,14 @@
             <div class="inner pull-right">
                 <button type="submit"
                         class="btn btn-primary"
-                        th:text="#{people.createPerson.save}"></button>
+                        th:text="#{common.save}"></button>
                 <a class="btn btn-danger"
                    th:if="${#authorization.expression('hasRole(''ROLE_DELETE_USER'')')}"
-                   th:text="#{people.delete}"
+                   th:text="#{common.delete}"
                    th:href="@{../delete/{id}(id=${person.id})}"></a>
                 <a class="btn btn-secondary"
                    th:href="@{/people}"
-                   th:text="#{people.createPerson.cancel}"></a>
+                   th:text="#{common.cancel}"></a>
             </div>
         </form>
     </div>

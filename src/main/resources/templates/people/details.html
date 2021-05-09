@@ -15,7 +15,7 @@
                 <label th:text="#{people.details}"></label>
                 <a class="btn btn-success btn-sm"
                    th:if="${#authorization.expression('hasRole(''ROLE_EDIT_USER'')')}"
-                   th:text="#{people.edit}"
+                   th:text="#{common.edit}"
                    th:href="@{edit/{id}(id=${person.id})}"></a>
             </div>
         </h2>
@@ -83,7 +83,7 @@
             <div class="inner pull-right">
                 <a class="btn btn-secondary"
                    th:href="@{/people}"
-                   th:text="#{people.createPerson.cancel}"></a>
+                   th:text="#{common.cancel}"></a>
             </div>
         </form>
     </div>
