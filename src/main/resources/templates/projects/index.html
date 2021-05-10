@@ -26,11 +26,13 @@
             <tr>
                 <th>Id</th>
                 <th th:text="#{project.name}"></th>
+                <th th:text="#{project.content}"></th>
             </tr>
             </thead>
             <tr th:each="project : ${projects}">
                 <td th:text="${project.id}"></td>
                 <td th:text="${project.name}"></td>
+                <td th:text="${project.content}"></td>
             </tr>
         </table>
 
