@@ -81,8 +81,7 @@
                 <td th:text="${issue.id}"></td>
                 <td th:text="${issue.project.name}"></td>
                 <td th:text="${issue.title}"></td>
-                <td th:if="${issue.assignee != null}"
-                    th:text="${issue.assignee.name}"></td>
+                <td th:text="${issue.assignee != null} ? ${issue.assignee.name} : #{issues.assignee.empty}"></td>
                 <td th:text="#{${'state.' + issue.state}}"></td>
             </tr>
         </table>
