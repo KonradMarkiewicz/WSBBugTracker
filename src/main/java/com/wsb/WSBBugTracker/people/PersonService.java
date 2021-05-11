@@ -60,14 +60,14 @@ public class PersonService {
 
     protected void deletePerson(Long id) {
         Person person = personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
         person.setEnabled(false);
         personRepository.save(person);
     }
 
     protected Person editPerson(Long id){
         return personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
     }
 
     List<Person> findAllUsers() {

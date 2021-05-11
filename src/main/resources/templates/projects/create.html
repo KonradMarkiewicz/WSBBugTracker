@@ -15,6 +15,9 @@
         <form th:action="@{/projects/save}"
               th:object="${project}"
               method="post">
+
+            <input type="hidden" th:field="*{id}"/>
+
             <div class="row">
                 <div class="mb-3">
                     <div>
