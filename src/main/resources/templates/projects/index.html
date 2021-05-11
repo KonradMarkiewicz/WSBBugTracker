@@ -31,7 +31,10 @@
             </thead>
             <tr th:each="project : ${projects}">
                 <td th:text="${projectStat.count}"></td>
-                <td th:text="${project.name}"></td>
+                <td>
+                    <a th:text="${project.name}"
+                       th:href="@{projects/edit/{id}(id=${project.id})}"></a>
+                </td>
                 <td th:text="${project.content}"></td>
             </tr>
         </table>

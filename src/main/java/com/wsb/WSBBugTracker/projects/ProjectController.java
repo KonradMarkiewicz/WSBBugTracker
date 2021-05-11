@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/projects")
@@ -30,7 +31,7 @@ public class ProjectController {
 
     @GetMapping("/create")
     @Secured("ROLE_CREATE_PROJECT")
-    ModelAndView create(){
+    ModelAndView create(RedirectAttributes attributes){
         ModelAndView modelAndView = new ModelAndView("projects/create");
         modelAndView.addObject("project", new Project());
 
@@ -39,18 +40,26 @@ public class ProjectController {
 
     @PostMapping("/save")
     @Secured("ROLE_CREATE_PROJECT")
-    ModelAndView createNewProject(@ModelAttribute @Valid Project project, BindingResult result,
-                                  RedirectAttributes attributes) {
+    ModelAndView createNewProject(@ModelAttribute @Valid Project project, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("projects/create");
 
             return modelAndView;
         }
-
         projectRepository.save(project);
-//        attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/projects");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    @Secured("ROLE_EDIT_PROJECT")
+    ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("projects/create");
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
+        modelAndView.addObject("project", project);
 
         return modelAndView;
     }
