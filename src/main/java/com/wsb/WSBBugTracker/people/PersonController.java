@@ -59,7 +59,7 @@ public class PersonController {
     }
 
     @GetMapping("/delete/{id}")
-    @Secured("ROLE_CREATE_USER")
+    @Secured("ROLE_DELETE_USER")
     ModelAndView deleteUser(@ModelAttribute @PathVariable("id") Long id, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         personService.deletePerson(id);
