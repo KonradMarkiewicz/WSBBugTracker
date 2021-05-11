@@ -48,6 +48,8 @@ public class IssueController {
     @Secured("ROLE_CREATE_ISSUE")
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("issues/create");
+        modelAndView.addObject("issue", new Issue());
+
         return getModelAndView(modelAndView);
     }
 
@@ -59,6 +61,8 @@ public class IssueController {
 
         if (result.hasErrors()) {
             modelAndView.setViewName("issues/create");
+            modelAndView.addObject("issue", issue);
+
             return getModelAndView(modelAndView);
         }
 
@@ -75,7 +79,6 @@ public class IssueController {
         modelAndView.addObject("states", State.values());
         modelAndView.addObject("priorities", Priority.values());
         modelAndView.addObject("types", Type.values());
-        modelAndView.addObject("issue", new Issue());
 
         return modelAndView;
     }
