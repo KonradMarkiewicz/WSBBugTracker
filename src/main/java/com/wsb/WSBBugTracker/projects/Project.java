@@ -26,12 +26,12 @@ public class Project {
     Boolean enabled;
 
     @NotEmpty
-    @Size(min = 5, max = 100)
+    @Size(min = 5, max = 255)
     @Column(nullable = false, unique = true)
     String name;
 
     @NotEmpty
-    @Size(min = 5, max = 1000)
+    @Size(min = 5, max = 10000)
     @Column(columnDefinition = "TEXT")
     String content;
 }
