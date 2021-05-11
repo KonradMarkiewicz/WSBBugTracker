@@ -21,9 +21,9 @@ public class Project {
     @GeneratedValue
     Long id;
 
-    @Column
+    @Column(nullable = false)
     @ColumnDefault(value = "true")
-    Boolean enabled;
+    Boolean enabled = true;
 
     @NotEmpty
     @Size(min = 5, max = 255)

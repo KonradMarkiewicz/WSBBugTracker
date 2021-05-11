@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/projects")
@@ -24,7 +23,7 @@ public class ProjectController {
     @Secured("ROLE_PROJECTS_TAB")
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView("projects/index");
-        modelAndView.addObject("projects", projectRepository.findAll());
+        modelAndView.addObject("projects", projectRepository.findProjectByEnabledIsTrue());
 
         return modelAndView;
     }
@@ -60,6 +59,19 @@ public class ProjectController {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
         modelAndView.addObject("project", project);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    @Secured("ROLE_DELETE_PROJECT")
+    ModelAndView deleteUser(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
+        project.setEnabled(false);
+        projectRepository.save(project);
+        modelAndView.setViewName("redirect:/projects");
 
         return modelAndView;
     }
