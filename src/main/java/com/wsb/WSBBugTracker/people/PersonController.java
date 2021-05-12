@@ -71,7 +71,7 @@ public class PersonController {
 
     @GetMapping("/edit/{id}")
     @Secured("ROLE_EDIT_USER")
-    ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
+    ModelAndView showEditUserForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("people/edit");
         modelAndView.addObject("authorities", personService.findAuthorities());
         modelAndView.addObject("person", personService.editPerson(id));

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -30,7 +29,7 @@ public class ProjectController {
 
     @GetMapping("/create")
     @Secured("ROLE_CREATE_PROJECT")
-    ModelAndView create(RedirectAttributes attributes){
+    ModelAndView create(){
         ModelAndView modelAndView = new ModelAndView("projects/create");
         modelAndView.addObject("project", new Project());
 
@@ -54,7 +53,7 @@ public class ProjectController {
 
     @GetMapping("/edit/{id}")
     @Secured("ROLE_EDIT_PROJECT")
-    ModelAndView showUpdateUserForm(@ModelAttribute @PathVariable("id") Long id) {
+    ModelAndView showEditProjectForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/create");
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
@@ -65,7 +64,7 @@ public class ProjectController {
 
     @GetMapping("/delete/{id}")
     @Secured("ROLE_DELETE_PROJECT")
-    ModelAndView deleteUser(@ModelAttribute @PathVariable("id") Long id) {
+    ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));

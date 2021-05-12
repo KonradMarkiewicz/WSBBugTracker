@@ -80,7 +80,10 @@
             <tr th:each="issue : ${issues}">
                 <td th:text="${issueStat.count}"></td>
                 <td th:text="${issue.project.name}"></td>
-                <td th:text="${issue.title}"></td>
+                <td>
+                    <a th:text="${issue.title}"
+                       th:href="@{issues/edit/{id}(id=${issue.id})}"></a>
+                </td>
                 <td th:text="${issue.assignee != null} ? ${issue.assignee.name} : #{issues.assignee.empty}"></td>
                 <td th:text="#{${'state.' + issue.state}}"></td>
             </tr>

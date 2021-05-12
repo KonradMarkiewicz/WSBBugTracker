@@ -8,12 +8,8 @@ import com.wsb.WSBBugTracker.projects.ProjectRepository;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -55,19 +51,15 @@ public class IssueController {
 
     @PostMapping("/save")
     @Secured("ROLE_CREATE_ISSUE")
-    ModelAndView createNewUser(@ModelAttribute @Valid Issue issue, BindingResult result,
-                               RedirectAttributes attributes) {
+    ModelAndView createIssueUser(@ModelAttribute @Valid Issue issue, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-
         if (result.hasErrors()) {
             modelAndView.setViewName("issues/create");
             modelAndView.addObject("issue", issue);
 
             return getModelAndView(modelAndView);
         }
-
         issueRepository.save(issue);
-//        attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/issues");
 
         return modelAndView;
@@ -81,5 +73,16 @@ public class IssueController {
         modelAndView.addObject("types", Type.values());
 
         return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    @Secured("ROLE_EDIT_ISSUE")
+    ModelAndView showEditIssueForm(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("issues/create");
+        Issue issue = issueRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id zgłoszenia: " + id));
+        modelAndView.addObject("issue", issue);
+
+        return getModelAndView(modelAndView);
     }
 }
