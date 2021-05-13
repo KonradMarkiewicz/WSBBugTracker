@@ -168,6 +168,10 @@
                 <button type="submit"
                         class="btn btn-primary"
                         th:text="#{common.save}"></button>
+                <a class="btn btn-danger"
+                   th:if="${issue.id} and ${#authorization.expression('hasRole(''ROLE_DELETE_ISSUE'')')}"
+                   th:text="#{common.delete}"
+                   th:href="@{../delete/{id}(id=${issue.id})}"></a>
                 <a class="btn btn-secondary"
                    th:href="@{/issues}"
                    th:text="#{common.cancel}"></a>

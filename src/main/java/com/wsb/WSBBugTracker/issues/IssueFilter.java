@@ -15,6 +15,7 @@ public class IssueFilter {
     State state;
     Project project;
     Person assignee;
+    Boolean isEnabled;
 
     private Specification<Issue> hasState() {
         return (issueRoot, query, builder) -> builder.equal(issueRoot.get("state"), state);
@@ -28,8 +29,12 @@ public class IssueFilter {
         return (issueRoot, query, builder) -> builder.equal(issueRoot.get("assignee"), assignee);
     }
 
+    private Specification<Issue> isEnabled() {
+        return (issueRoot, query, builder) -> builder.equal(issueRoot.get("enabled"), true);
+    }
+
     public Specification<Issue> buildQuery() {
-        Specification<Issue> spec = Specification.where(null);
+        Specification<Issue> spec = Specification.where(isEnabled());
 
         if (project != null) {
             spec = spec.and(hasProject());
