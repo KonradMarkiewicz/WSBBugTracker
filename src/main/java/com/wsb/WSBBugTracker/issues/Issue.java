@@ -8,6 +8,7 @@ import com.wsb.WSBBugTracker.projects.Project;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -25,6 +26,10 @@ public class Issue {
     @Id
     @GeneratedValue
     Long id;
+
+    @Column(nullable = false)
+    @ColumnDefault(value = "true")
+    Boolean enabled = true;
 
     @NotEmpty
     @Size(min=5, max=255)

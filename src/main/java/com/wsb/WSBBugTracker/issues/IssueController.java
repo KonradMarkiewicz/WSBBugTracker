@@ -85,4 +85,17 @@ public class IssueController {
 
         return getModelAndView(modelAndView);
     }
+
+    @GetMapping("/delete/{id}")
+    @Secured("ROLE_DELETE_PROJECT")
+    ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Issue issue = issueRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id zgłoszenia: " + id));
+        issue.setEnabled(false);
+        issueRepository.save(issue);
+        modelAndView.setViewName("redirect:/issues");
+
+        return modelAndView;
+    }
 }
