@@ -26,10 +26,12 @@ td > a {
 
 
 .pagination > li > a,
-.pagination > li > a,
+.pagination > li > span,
 .pagination > li > a:hover,
 .pagination > li > span:hover {
     color: #343a40;
+    outline: none !important;
+    box-shadow: none !important;
 }
 .pagination > .active > a,
 .pagination > .active > a:focus,

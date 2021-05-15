@@ -24,20 +24,51 @@
         <table class="table table-striped table-dark">
             <thead>
             <tr>
-                <th>#</th>
                 <th th:text="#{project.name}"></th>
                 <th th:text="#{project.content}"></th>
+                <th></th>
             </tr>
             </thead>
             <tr th:each="project : ${projects}">
-                <td th:text="${projectStat.count}"></td>
                 <td>
                     <a th:text="${project.name}"
                        th:href="@{projects/edit/{id}(id=${project.id})}"></a>
                 </td>
                 <td th:text="${project.content}"></td>
+                <td>
+                    <div class="pull-right">
+                        <a class="btn btn-success btn-sm"
+                           th:if="${#authorization.expression('hasRole(''ROLE_EDIT_PROJECT'')')}"
+                           th:text="#{common.edit}"
+                           th:href="@{projects/edit/{id}(id=${project.id})}"></a>
+                    </div>
+                </td>
             </tr>
         </table>
+
+        <nav th:if="${projects.totalPages gt 1}">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item" th:classappend="${projects.number eq 0} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/projects?page={id}(id=${projects.number lt 2 ? 1 : customers.number})}"
+                       aria-label="Previous" th:title="#{pagination.previous}" data-toggle="tooltip">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${i eq projects.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, projects.totalPages, 1)}">
+                    <a class="page-link" th:href="@{/projects?page={id}(id=${i})}" th:text="${i}"
+                       th:title="#{pagination.page}+' '+${i}" data-toggle="tooltip"></a>
+                </li>
+                <li class="page-item" th:classappend="${projects.number + 1 eq projects.totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/projects?page={id}(id=${projects.number + 2})}"
+                       aria-label="Next" th:title="#{pagination.next}" data-toggle="tooltip">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
     </div>
 </section>

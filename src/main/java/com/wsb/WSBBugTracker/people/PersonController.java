@@ -76,17 +76,6 @@ public class PersonController {
         return modelAndView;
     }
 
-    @GetMapping("/delete/{id}")
-    @Secured("ROLE_DELETE_USER")
-    ModelAndView deleteUser(@ModelAttribute @PathVariable("id") Long id, RedirectAttributes attributes) {
-        ModelAndView modelAndView = new ModelAndView();
-        personService.deletePerson(id);
-        attributes.addAttribute("delete", "success");
-        modelAndView.setViewName("redirect:/people");
-
-        return modelAndView;
-    }
-
     @GetMapping("/edit/{id}")
     @Secured("ROLE_EDIT_USER")
     ModelAndView showEditUserForm(@ModelAttribute @PathVariable("id") Long id) {
@@ -112,6 +101,17 @@ public class PersonController {
 
         personService.savePerson(person);
         attributes.addAttribute("update", "success");
+        modelAndView.setViewName("redirect:/people");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    @Secured("ROLE_DELETE_USER")
+    ModelAndView deleteUser(@ModelAttribute @PathVariable("id") Long id, RedirectAttributes attributes) {
+        ModelAndView modelAndView = new ModelAndView();
+        personService.deletePerson(id);
+        attributes.addAttribute("delete", "success");
         modelAndView.setViewName("redirect:/people");
 
         return modelAndView;

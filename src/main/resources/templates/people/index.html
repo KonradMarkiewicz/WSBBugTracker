@@ -60,7 +60,7 @@
             </tr>
         </table>
 
-        <nav th:if="${people.totalPages gt 0}">
+        <nav th:if="${people.totalPages gt 1}">
             <ul class="pagination pagination-sm justify-content-center">
                 <li class="page-item" th:classappend="${people.number eq 0} ? 'disabled'">
                     <a class="page-link"
