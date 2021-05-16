@@ -72,7 +72,6 @@ public class ProjectController {
     @Secured("ROLE_EDIT_PROJECT")
     ModelAndView showEditProjectForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/create");
-        projectService.editProject(id);
         modelAndView.addObject("project", projectService.editProject(id));
 
         return modelAndView;

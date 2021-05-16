@@ -24,14 +24,14 @@ public class ProjectService {
 
     protected void deleteProject(Long id) {
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
         project.setEnabled(false);
         projectRepository.save(project);
     }
 
     protected Project editProject (Long id){
         return projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
     }
 
     public Page<Project> findPaginated(Pageable pageable) {
