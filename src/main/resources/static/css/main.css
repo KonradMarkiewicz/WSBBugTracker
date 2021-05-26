@@ -18,6 +18,33 @@ section.container {
     font-size: x-small;
 }
 
-a {
-    color: whitesmoke !important;
+td > a {
+    text-decoration: none !important;
+    font-weight: bold;
+    color: #d3d3d3 !important;
+}
+
+
+.pagination > li > a,
+.pagination > li > span,
+.pagination > li > a:hover,
+.pagination > li > span:hover {
+    color: #343a40;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #343a40;
+    border-color: #343a40;
+    color:whitesmoke;
+}
+
+.pagination > .page-item.active .page-link {
+    background-color: #2c3034;
+    border-color: #2c3034;
 }

@@ -1,5 +1,7 @@
 package com.wsb.WSBBugTracker.projects;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -7,22 +9,37 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
+    private final ProjectService projectService;
 
-    final ProjectRepository projectRepository;
-
-    public ProjectController(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
-    @GetMapping()
-    @Secured("ROLE_PROJECTS_TAB")
-    public ModelAndView index(){
+    @RequestMapping()
+    public ModelAndView index(@RequestParam("page") Optional<Integer> page,
+                              @RequestParam("size") Optional<Integer> size) {
         ModelAndView modelAndView = new ModelAndView("projects/index");
-        modelAndView.addObject("projects", projectRepository.findProjectByEnabledIsTrue());
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Page<Project> projects = projectService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        modelAndView.addObject("projects", projects);
+
+        int totalPages = projects.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelAndView.addObject("pageNumbers", pageNumbers);
+        }
 
         return modelAndView;
     }
@@ -45,7 +62,7 @@ public class ProjectController {
 
             return modelAndView;
         }
-        projectRepository.save(project);
+        projectService.saveProject(project);
         modelAndView.setViewName("redirect:/projects");
 
         return modelAndView;
@@ -55,9 +72,7 @@ public class ProjectController {
     @Secured("ROLE_EDIT_PROJECT")
     ModelAndView showEditProjectForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/create");
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
-        modelAndView.addObject("project", project);
+        modelAndView.addObject("project", projectService.editProject(id));
 
         return modelAndView;
     }
@@ -66,10 +81,7 @@ public class ProjectController {
     @Secured("ROLE_DELETE_PROJECT")
     ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id projektu: " + id));
-        project.setEnabled(false);
-        projectRepository.save(project);
+        projectService.deleteProject(id);
         modelAndView.setViewName("redirect:/projects");
 
         return modelAndView;

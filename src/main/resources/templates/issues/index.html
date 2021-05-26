@@ -70,24 +70,68 @@
         <table class="table table-striped table-dark">
             <thead>
             <tr>
-                <th>#</th>
-                <th th:text="#{issues.project}"></th>
                 <th th:text="#{issues.title}"></th>
+                <th th:text="#{issues.project}"></th>
+                <th th:text="#{issues.priority}"></th>
                 <th th:text="#{issues.assignee}"></th>
                 <th th:text="#{issues.state}"></th>
+                <th></th>
             </tr>
             </thead>
             <tr th:each="issue : ${issues}">
-                <td th:text="${issueStat.count}"></td>
-                <td th:text="${issue.project.name}"></td>
                 <td>
                     <a th:text="${issue.title}"
                        th:href="@{issues/edit/{id}(id=${issue.id})}"></a>
                 </td>
+                <td th:text="${issue.project.name}"></td>
+                <td th:text="#{${'priority.' + issue.priority}}"></td>
                 <td th:text="${issue.assignee != null} ? ${issue.assignee.name} : #{issues.assignee.empty}"></td>
                 <td th:text="#{${'state.' + issue.state}}"></td>
+                <td>
+                    <div class="pull-right">
+                        <a class="btn btn-success btn-sm"
+                           th:if="${#authorization.expression('hasRole(''ROLE_EDIT_ISSUE'')')}"
+                           th:text="#{common.edit}"
+                           th:href="@{issues/edit/{id}(id=${issue.id})}"></a>
+                    </div>
+                </td>
             </tr>
         </table>
+
+        <nav th:if="${issues.totalPages gt 1}">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item"
+                    th:classappend="${issues.number eq 0} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/issues?page={id}(id=${issues.number lt 2 ? 1 : issues.number})}"
+                       aria-label="Previous"
+                       th:title="#{pagination.previous}"
+                       data-toggle="tooltip">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${i eq issues.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, issues.totalPages, 1)}">
+                    <a class="page-link"
+                       th:href="@{/issues?page={id}(id=${i})}"
+                       th:text="${i}"
+                       th:title="#{pagination.page}+' '+${i}"
+                       data-toggle="tooltip"></a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${issues.number + 1 eq issues.totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/issues?page={id}(id=${issues.number + 2})}"
+                       aria-label="Next"
+                       th:title="#{pagination.next}"
+                       data-toggle="tooltip">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </section>
 </body>
