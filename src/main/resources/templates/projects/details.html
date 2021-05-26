@@ -10,11 +10,17 @@
 <body>
 <section class="container">
     <div layout:fragment="content">
-        <h2 th:text="#{projects.label}"></h2>
+        <h2 class="row">
+            <div class="inner">
+                <label th:text="#{projects.details}"></label>
+                <a class="btn btn-success btn-sm"
+                   th:if="${#authorization.expression('hasRole(''ROLE_EDIT_PROJECT'')')}"
+                   th:text="#{common.edit}"
+                   th:href="@{edit/{id}(id=${project.id})}"></a>
+            </div>
+        </h2>
 
-        <form th:action="@{/projects/save}"
-              th:object="${project}"
-              method="post">
+        <form th:object="${project}">
             <div class="row">
                 <div class="mb-3">
                     <div>
@@ -26,7 +32,8 @@
                         <input id="name"
                                type="text"
                                th:field="*{name}"
-                               th:class="'form-control ' + ${#fields.hasErrors('name') ? 'is-invalid' : ''}"/>
+                               class="form-control"
+                               disabled/>
                         <small class="text-danger"
                                th:if="${#fields.hasErrors('name')}"
                                th:errors="*{name}"></small>
@@ -43,7 +50,8 @@
                                   type="text"
                                   rows="10"
                                   th:field="*{content}"
-                                  th:class="'form-control ' + ${#fields.hasErrors('content') ? 'is-invalid' : ''}"></textarea>
+                                  class="form-control"
+                                  disabled></textarea>
                         <small class="text-danger"
                                th:if="${#fields.hasErrors('content')}"
                                th:errors="*{content}"></small>
@@ -52,13 +60,6 @@
             </div>
 
             <div class="inner pull-right mt-3">
-                <button type="submit"
-                        class="btn btn-primary"
-                        th:text="#{common.save}"></button>
-                <a class="btn btn-danger"
-                   th:if="${project.id} and ${#authorization.expression('hasRole(''ROLE_DELETE_PROJECT'')')}"
-                   th:text="#{common.delete}"
-                   th:href="@{../delete/{id}(id=${project.id})}"></a>
                 <a class="btn btn-secondary"
                    th:href="@{/projects}"
                    th:text="#{common.cancel}"></a>

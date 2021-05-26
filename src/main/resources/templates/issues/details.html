@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://github.com/ultraq/thymeleaf-layout-dialect"
+      layout:decorate="~{layouts/loggedInLayout}">
+<head>
+    <title th:text="#{issues.details}"></title>
+</head>
+
+<body>
+<section class="container">
+    <div layout:fragment="content">
+        <h2 class="row">
+            <div class="inner">
+                <label th:text="#{issues.details}"></label>
+                <a class="btn btn-success btn-sm"
+                   th:if="${#authorization.expression('hasRole(''ROLE_EDIT_ISSUE'')')}"
+                   th:text="#{common.edit}"
+                   th:href="@{edit/{id}(id=${issue.id})}"></a>
+            </div>
+        </h2>
+
+        <form th:object="${issue}">
+            <div class="row">
+                <div class="col-9">
+                    <div class="mb-3">
+                        <div>
+                            <label for="title"
+                                   class="form-label"
+                                   th:text="#{issues.title}"></label>
+                        </div>
+                        <div>
+                            <input id="title"
+                                   type="text"
+                                   th:field="*{title}"
+                                   class="form-control"
+                                   disabled/>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('title')}"
+                                   th:errors="*{title}"></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div>
+                            <label for="content"
+                                   class="form-label"
+                                   th:text="#{issues.content}"></label>
+                        </div>
+                        <div>
+                        <textarea id="content"
+                                  type="text"
+                                  rows="10"
+                                  th:field="*{content}"
+                                  class="form-control"
+                                  disabled></textarea>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('content')}"
+                                   th:errors="*{content}"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-3">
+                        <div>
+                            <label for="priority"
+                                   class="form-label"
+                                   th:text="#{issues.priority}"></label>
+                        </div>
+                        <div>
+                            <select id="priority"
+                                    th:field="*{priority}"
+                                    class="form-control"
+                                    disabled>
+                                <option th:each="priority : ${priorities}"
+                                        th:value="${priority}"
+                                        th:text="${#messages.msg('priority.' + priority)}"></option>
+                            </select>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('priority')}"
+                                   th:errors="*{priority}"></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div>
+                            <label for="type"
+                                   class="form-label"
+                                   th:text="#{issues.type}"></label>
+                        </div>
+                        <div>
+                            <select id="type"
+                                    th:field="*{type}"
+                                    class="form-control"
+                                    disabled>
+                                <option th:each="type : ${types}"
+                                        th:value="${type}"
+                                        th:text="${#messages.msg('type.' + type)}"></option>
+                            </select>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('type')}"
+                                   th:errors="*{type}"></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div>
+                            <label for="project"
+                                   class="form-label"
+                                   th:text="#{issues.project}"></label>
+                        </div>
+                        <div>
+                            <select id="project"
+                                    th:field="*{project}"
+                                    class="form-control"
+                                    disabled>
+                                <option th:each="project : ${projects}"
+                                        th:value="${project.id}"
+                                        th:text="${project.name}"></option>
+                            </select>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('project')}"
+                                   th:errors="*{project}"></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div>
+                            <label for="assignee"
+                                   class="form-label"
+                                   th:text="#{issues.assignee}"></label>
+                        </div>
+                        <div>
+                            <select id="assignee"
+                                    th:field="*{assignee}"
+                                    class="form-control"
+                                    disabled>
+                                <option th:each="person : ${people}"
+                                        th:value="${person.id}"
+                                        th:text="${person.name}"></option>
+                            </select>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('assignee')}"
+                                   th:errors="*{assignee}"></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div>
+                            <label for="state"
+                                   class="form-label"
+                                   th:text="#{issues.state}"></label>
+                        </div>
+                        <div>
+                            <select id="state"
+                                    th:field="*{state}"
+                                    class="form-control"
+                                    disabled>
+                                <option th:each="state : ${states}"
+                                        th:value="${state}"
+                                        th:text="${#messages.msg('state.' + state)}"></option>
+                            </select>
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('state')}"
+                                   th:errors="*{state}"></small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="inner pull-right mt-3">
+                <a class="btn btn-secondary"
+                   th:href="@{/issues}"
+                   th:text="#{common.cancel}"></a>
+            </div>
+        </form>
+
+    </div>
+</section>
+</body>
+</html>

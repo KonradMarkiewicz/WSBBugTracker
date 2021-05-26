@@ -7,12 +7,12 @@ import com.wsb.WSBBugTracker.enums.State;
 import com.wsb.WSBBugTracker.projects.ProjectRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -99,10 +99,30 @@ public class IssueController {
     @GetMapping("/edit/{id}")
     @Secured("ROLE_EDIT_ISSUE")
     ModelAndView showEditIssueForm(@ModelAttribute @PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("issues/create");
+        ModelAndView modelAndView = new ModelAndView("issues/edit");
         modelAndView.addObject("issue", issueService.editIssue(id));
 
         return getModelAndView(modelAndView);
+    }
+
+    @PostMapping("/update/{id}")
+    @Secured("ROLE_EDIT_ISSUE")
+    ModelAndView updateUser(@PathVariable("id") Long id, @Valid Issue issue,
+                            BindingResult result, RedirectAttributes attributes) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (result.hasErrors()) {
+            issue.setId(id);
+            modelAndView.setViewName("issues/edit");
+            modelAndView.addObject("issue", issue);
+
+            return getModelAndView(modelAndView);
+        }
+
+        issueService.saveIssue(issue);
+        attributes.addAttribute("update", "success");
+        modelAndView.setViewName("redirect:/issues");
+
+        return modelAndView;
     }
 
     @GetMapping("/delete/{id}")
@@ -113,5 +133,14 @@ public class IssueController {
         modelAndView.setViewName("redirect:/issues");
 
         return modelAndView;
+    }
+
+    @GetMapping("/{id}")
+    @Secured("ROLE_ISSUES_TAB")
+    ModelAndView showIssueDetails(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("issues/details");
+        modelAndView.addObject("issue", issueService.editIssue(id));
+
+        return getModelAndView(modelAndView);
     }
 }
