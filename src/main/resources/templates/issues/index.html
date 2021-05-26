@@ -10,7 +10,6 @@
 <body>
 <section class="container">
     <div layout:fragment="content">
-
         <h2 class="row">
             <div class="inner">
                 <label th:text="#{issues.label}"></label>
@@ -81,7 +80,7 @@
             <tr th:each="issue : ${issues}">
                 <td>
                     <a th:text="${issue.title}"
-                       th:href="@{issues/edit/{id}(id=${issue.id})}"></a>
+                       th:href="@{issues/{id}(id=${issue.id})}"></a>
                 </td>
                 <td th:text="${issue.project.name}"></td>
                 <td th:text="#{${'priority.' + issue.priority}}"></td>

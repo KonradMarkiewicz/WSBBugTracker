@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -62,6 +63,7 @@ public class ProjectController {
 
             return modelAndView;
         }
+
         projectService.saveProject(project);
         modelAndView.setViewName("redirect:/projects");
 
@@ -71,8 +73,27 @@ public class ProjectController {
     @GetMapping("/edit/{id}")
     @Secured("ROLE_EDIT_PROJECT")
     ModelAndView showEditProjectForm(@ModelAttribute @PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("projects/create");
+        ModelAndView modelAndView = new ModelAndView("projects/edit");
         modelAndView.addObject("project", projectService.editProject(id));
+
+        return modelAndView;
+    }
+
+    @PostMapping("/update/{id}")
+    @Secured("ROLE_EDIT_PROJECT")
+    ModelAndView updateUser(@PathVariable("id") Long id, @Valid Project project,
+                            BindingResult result, RedirectAttributes attributes) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (result.hasErrors()) {
+            project.setId(id);
+            modelAndView.setViewName("projects/edit");
+
+            return modelAndView;
+        }
+
+        projectService.saveProject(project);
+        attributes.addAttribute("update", "success");
+        modelAndView.setViewName("redirect:/projects");
 
         return modelAndView;
     }
@@ -87,4 +108,12 @@ public class ProjectController {
         return modelAndView;
     }
 
+    @GetMapping("/{id}")
+    @Secured("ROLE_PROJECTS_TAB")
+    ModelAndView showProjectDetails(@ModelAttribute @PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("projects/details");
+        modelAndView.addObject("project", projectService.editProject(id));
+
+        return modelAndView;
+    }
 }
