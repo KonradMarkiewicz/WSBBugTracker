@@ -64,7 +64,7 @@
             <ul class="pagination pagination-sm justify-content-center">
                 <li class="page-item" th:classappend="${people.number eq 0} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/people?page={id}(id=${people.number lt 2 ? 1 : customers.number})}"
+                       th:href="@{/people?page={id}(id=${people.number lt 2 ? 1 : issues.number})}"
                        aria-label="Previous" th:title="#{pagination.previous}" data-toggle="tooltip">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
