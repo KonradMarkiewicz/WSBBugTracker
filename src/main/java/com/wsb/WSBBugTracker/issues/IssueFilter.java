@@ -17,6 +17,7 @@ public class IssueFilter {
     Project project;
     Person assignee;
     Boolean isEnabled;
+    String globalSearch;
 
     private Specification<Issue> hasState() {
         return (issueRoot, query, builder) -> builder.equal(issueRoot.get("state"), state);
@@ -34,6 +35,14 @@ public class IssueFilter {
         return (issueRoot, query, builder) -> builder.equal(issueRoot.get("enabled"), true);
     }
 
+    private Specification<Issue> globalSearching() {
+
+        Specification<Issue> hasTitle = (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("title")), "%" + globalSearch.toLowerCase() + "%");
+        Specification<Issue> hasContent = (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("content")), "%" + globalSearch.toLowerCase() + "%");
+
+        return hasTitle.or(hasContent);
+    }
+
     public Specification<Issue> buildQuery() {
         Specification<Issue> spec = Specification.where(isEnabled());
 
@@ -49,6 +58,10 @@ public class IssueFilter {
             spec = spec.and(hasState());
         }
 
+        if (globalSearch != null) {
+            spec = spec.and(globalSearching());
+        }
+
         return spec;
     }
 
@@ -57,7 +70,8 @@ public class IssueFilter {
                 "&sort=" + toSortString(sort) +
                 (state != null ? "&state=" + state : "") +
                 (project != null ? "&project=" + project.getId() : "") +
-                (assignee != null ? "&assignee=" + assignee.getId() : "");
+                (assignee != null ? "&assignee=" + assignee.getId() : "") +
+                (globalSearch != null ? "&globalSearch=" + globalSearch : "");
     }
 
     public String toSortString(Sort sort) {
