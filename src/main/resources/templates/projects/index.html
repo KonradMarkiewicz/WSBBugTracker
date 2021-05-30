@@ -21,11 +21,30 @@
             </div>
         </h2>
 
+        <form th:action="@{/projects}"
+              th:object="${filter}">
+            <div class="row">
+                <div class="col-auto">
+                    <input th:field="*{globalSearch}"
+                           class="form-control"
+                           th:placeholder="#{globalSearch.placeholder}"/>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary"
+                            type="submit"
+                            th:text="#{common.search}"></button>
+                    <a th:href="@{/projects}"
+                       th:text="#{common.clear}"
+                       class="btn btn-secondary"></a>
+                </div>
+            </div>
+        </form>
+
         <table class="table table-striped table-dark">
             <thead>
             <tr>
-                <th th:text="#{projects.name}"></th>
-                <th th:text="#{projects.content}"></th>
+                <th th:replace="projects/sortableColumn.html :: sortableColumn(${projects}, ${filter}, 'name')"></th>
+                <th th:replace="projects/sortableColumn.html :: sortableColumn(${projects}, ${filter}, 'content')"></th>
                 <th></th>
             </tr>
             </thead>
@@ -46,38 +65,32 @@
             </tr>
         </table>
 
-        <nav th:if="${projects.totalPages gt 1}">
+        <div th:if="${projects.totalPages > 0}" class="row">
             <ul class="pagination pagination-sm justify-content-center">
-                <li class="page-item"
-                    th:classappend="${projects.number eq 0} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/projects?page={id}(id=${projects.number lt 2 ? 1 : issues.number})}"
-                       aria-label="Previous"
-                       th:title="#{pagination.previous}"
-                       data-toggle="tooltip">
-                        <span aria-hidden="true">&laquo;</span>
+                <li th:if="${projects.number != 0}"
+                    class="page-item">
+                    <a th:href="@{'/projects?' + ${filter.toQueryString(projects.number - 1, people.sort)}}"
+                       class="page-link">
+                        <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
-                <li class="page-item"
-                    th:classappend="${i eq projects.number + 1} ? 'active'"
-                    th:each="i : ${#numbers.sequence( 1, projects.totalPages, 1)}">
-                    <a class="page-link"
-                       th:href="@{/projects?page={id}(id=${i})}"
-                       th:text="${i}"
-                       th:title="#{pagination.page}+' '+${i}"
-                       data-toggle="tooltip"></a>
+
+                <li th:each="pageNumber : ${#numbers.sequence(T(Math).max(1, projects.number - 2), T(Math).min(projects.number + 4, projects.totalPages))}"
+                    th:class="${'page-item ' + ((pageNumber == projects.number + 1) ? 'active' : '')}">
+                    <a th:href="@{'/projects?' + ${filter.toQueryString(pageNumber - 1, projects.sort)}}"
+                       th:text="${pageNumber}"
+                       class="page-link"></a>
                 </li>
-                <li class="page-item" th:classappend="${projects.number + 1 eq projects.totalPages} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/projects?page={id}(id=${projects.number + 2})}"
-                       aria-label="Next"
-                       th:title="#{pagination.next}"
-                       data-toggle="tooltip">
-                        <span aria-hidden="true">&raquo;</span>
+
+                <li th:if="${projects.number != projects.totalPages - 1}"
+                    class="page-item">
+                    <a th:href="@{'/projects?' + ${filter.toQueryString(projects.number + 1, projects.sort)}}"
+                       class="page-link">
+                        <i class="fas fa-angle-right"></i>
                     </a>
                 </li>
             </ul>
-        </nav>
+        </div>
 
     </div>
 </section>
