@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th th:fragment="sortableColumn(people, filter, property)">
+    <div th:with="sortingDir=${people.sort.getOrderFor(property) != null ? people.sort.getOrderFor(property).direction.toString() : null}">
+        <span th:text="${#messages.msg('people.' + property)}"></span>
+        <a th:href="@{'/people?' + ${filter.toQueryString(people.number, filter.findNextSorting(people.sort, property))}}">
+            <i th:if="${sortingDir == null}" class="fas fa-sort"></i>
+            <i th:if="${sortingDir == 'ASC'}" class="fas fa-sort-up"></i>
+            <i th:if="${sortingDir == 'DESC'}" class="fas fa-sort-down"></i>
+        </a>
+    </div>
+</th>
+
+</body>
+<html>

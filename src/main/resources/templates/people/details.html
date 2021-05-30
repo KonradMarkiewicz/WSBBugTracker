@@ -26,7 +26,7 @@
                     <div>
                         <label for="username"
                                class="form-label"
-                               th:text="#{people.createPerson.username}"></label>
+                               th:text="#{people.username}"></label>
                     </div>
                     <div>
                         <input id="username"
@@ -40,7 +40,7 @@
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{people.createPerson.name}"></label>
+                               th:text="#{people.name}"></label>
                     </div>
                     <div>
                         <input id="name"
@@ -54,7 +54,7 @@
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{people.createPerson.email}"></label>
+                               th:text="#{people.email}"></label>
                     </div>
                     <div>
                         <input id="email"
@@ -68,7 +68,7 @@
                     <div>
                         <h5 for="roles"
                                class="form-label"
-                               th:text="#{people.createPerson.authorities}"></h5>
+                               th:text="#{people.authorities}"></h5>
                     </div>
                     <div th:each="authority : ${authorities}">
                         <input id="roles"

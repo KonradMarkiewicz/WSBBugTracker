@@ -32,13 +32,31 @@
             <span th:text="#{people.update.success}"></span>
         </div>
 
+        <form th:action="@{/people}"
+              th:object="${filter}">
+            <div class="row">
+                <div class="col-auto">
+                    <input th:field="*{globalSearch}"
+                           class="form-control"
+                           th:placeholder="#{globalSearch.placeholder}"/>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary"
+                            type="submit"
+                            th:text="#{common.search}"></button>
+                    <a th:href="@{/people}"
+                       th:text="#{common.clear}"
+                       class="btn btn-secondary"></a>
+                </div>
+            </div>
+        </form>
 
         <table class="table table-hover table-striped table-dark">
             <thead>
             <tr>
-                <th th:text="#{people.createPerson.username}"></th>
-                <th th:text="#{people.createPerson.name}"></th>
-                <th th:text="#{people.createPerson.email}"></th>
+                <th th:replace="people/sortableColumn.html :: sortableColumn(${people}, ${filter}, 'username')"></th>
+                <th th:replace="people/sortableColumn.html :: sortableColumn(${people}, ${filter}, 'name')"></th>
+                <th th:replace="people/sortableColumn.html :: sortableColumn(${people}, ${filter}, 'email')"></th>
                 <th></th>
             </tr>
             </thead>
@@ -60,29 +78,32 @@
             </tr>
         </table>
 
-        <nav th:if="${people.totalPages gt 1}">
+        <div th:if="${people.totalPages > 0}" class="row">
             <ul class="pagination pagination-sm justify-content-center">
-                <li class="page-item" th:classappend="${people.number eq 0} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/people?page={id}(id=${people.number lt 2 ? 1 : issues.number})}"
-                       aria-label="Previous" th:title="#{pagination.previous}" data-toggle="tooltip">
-                        <span aria-hidden="true">&laquo;</span>
+                <li th:if="${people.number != 0}"
+                    class="page-item">
+                    <a th:href="@{'/people?' + ${filter.toQueryString(people.number - 1, people.sort)}}"
+                       class="page-link">
+                        <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
-                <li class="page-item" th:classappend="${i eq people.number + 1} ? 'active'"
-                    th:each="i : ${#numbers.sequence( 1, people.totalPages, 1)}">
-                    <a class="page-link" th:href="@{/people?page={id}(id=${i})}" th:text="${i}"
-                       th:title="#{pagination.page}+' '+${i}" data-toggle="tooltip"></a>
+
+                <li th:each="pageNumber : ${#numbers.sequence(T(Math).max(1, people.number - 2), T(Math).min(people.number + 4, people.totalPages))}"
+                    th:class="${'page-item ' + ((pageNumber == people.number + 1) ? 'active' : '')}">
+                    <a th:href="@{'/people?' + ${filter.toQueryString(pageNumber - 1, people.sort)}}"
+                       th:text="${pageNumber}"
+                       class="page-link"></a>
                 </li>
-                <li class="page-item" th:classappend="${people.number + 1 eq people.totalPages} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/people?page={id}(id=${people.number + 2})}"
-                       aria-label="Next" th:title="#{pagination.next}" data-toggle="tooltip">
-                        <span aria-hidden="true">&raquo;</span>
+
+                <li th:if="${people.number != people.totalPages - 1}"
+                    class="page-item">
+                    <a th:href="@{'/people?' + ${filter.toQueryString(people.number + 1, people.sort)}}"
+                       class="page-link">
+                        <i class="fas fa-angle-right"></i>
                     </a>
                 </li>
             </ul>
-        </nav>
+        </div>
 
     </div>
 </section>
