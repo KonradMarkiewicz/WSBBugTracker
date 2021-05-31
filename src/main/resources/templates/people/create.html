@@ -20,7 +20,7 @@
                     <div>
                         <label for="username"
                                class="form-label"
-                               th:text="#{people.createPerson.username}"></label>
+                               th:text="#{people.username}"></label>
                     </div>
                     <div>
                         <input id="username"
@@ -37,7 +37,7 @@
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{people.createPerson.name}"></label>
+                               th:text="#{people.name}"></label>
                     </div>
                     <div>
                         <input id="name"
@@ -54,7 +54,7 @@
                     <div>
                         <label for="name"
                                class="form-label"
-                               th:text="#{people.createPerson.email}"></label>
+                               th:text="#{people.email}"></label>
                     </div>
                     <div>
                         <input id="email"
@@ -71,7 +71,7 @@
                     <div>
                         <label for="password"
                                class="form-label"
-                               th:text="#{people.createPerson.password}"></label>
+                               th:text="#{people.password}"></label>
                     </div>
                     <div>
                         <input id="password"
@@ -88,7 +88,7 @@
                     <div>
                         <label for="repeated-password"
                                class="form-label"
-                               th:text="#{people.createPerson.repeatedPassword}"></label>
+                               th:text="#{people.repeatedPassword}"></label>
                     </div>
                     <div>
                         <input id="repeated-password"
@@ -104,7 +104,7 @@
                 <div class="mb-3">
                     <div>
                         <h5 class="form-label"
-                               th:text="#{people.createPerson.authorities}"></h5>
+                               th:text="#{people.authorities}"></h5>
                     </div>
                     <div th:each="authority : ${authorities}">
                         <input name="authorities"

@@ -66,7 +66,7 @@
                                     th:field="*{priority}"
                                     class="form-control">
                                 <option th:value="${null}"
-                                        th:text="#{issues.priority.placeholder}"></option>
+                                        th:text="#{priority.placeholder}"></option>
                                 <option th:each="priority : ${priorities}"
                                         th:value="${priority}"
                                         th:text="${#messages.msg('priority.' + priority)}"></option>
@@ -87,7 +87,7 @@
                                     th:field="*{type}"
                                     class="form-control">
                                 <option th:value="${null}"
-                                        th:text="#{issues.type.placeholder}"></option>
+                                        th:text="#{type.placeholder}"></option>
                                 <option th:each="type : ${types}"
                                         th:value="${type}"
                                         th:text="${#messages.msg('type.' + type)}"></option>

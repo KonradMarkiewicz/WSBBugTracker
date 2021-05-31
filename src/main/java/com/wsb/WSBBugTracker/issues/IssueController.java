@@ -6,7 +6,7 @@ import com.wsb.WSBBugTracker.people.PersonRepository;
 import com.wsb.WSBBugTracker.enums.State;
 import com.wsb.WSBBugTracker.projects.ProjectRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -37,26 +37,12 @@ public class IssueController {
     }
 
     @RequestMapping()
-    public ModelAndView index(@RequestParam("page") Optional<Integer> page,
-                              @RequestParam("size") Optional<Integer> size,
-                              @ModelAttribute IssueFilter issueFilter) {
+    public ModelAndView index(@ModelAttribute IssueFilter issueFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("issues/index");
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
 
-        List<Issue> withFilter = issueRepository.findAll(issueFilter.buildQuery());
-        Page<Issue> issues = issueService.findPaginated(withFilter,
-                PageRequest.of(currentPage - 1, pageSize));
+        Page<Issue> issues = issueRepository.findAll(issueFilter.buildQuery(), pageable);
         modelAndView.addObject("issues", issues);
         modelAndView.addObject("filter", issueFilter);
-
-        int totalPages = issues.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            modelAndView.addObject("pageNumbers", pageNumbers);
-        }
 
         return getModelAndView(modelAndView);
     }
@@ -87,8 +73,8 @@ public class IssueController {
     }
 
     private ModelAndView getModelAndView(ModelAndView modelAndView) {
-        modelAndView.addObject("projects", projectRepository.findAll());
-        modelAndView.addObject("people", personRepository.findAll());
+        modelAndView.addObject("projects", projectRepository.findProjectByEnabledIsTrue());
+        modelAndView.addObject("people", personRepository.findPersonByEnabledIsTrue());
         modelAndView.addObject("states", State.values());
         modelAndView.addObject("priorities", Priority.values());
         modelAndView.addObject("types", Type.values());

@@ -1,7 +1,7 @@
 package com.wsb.WSBBugTracker.projects;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,37 +10,26 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
     private final ProjectService projectService;
+    private final ProjectRepository projectRepository;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, ProjectRepository projectRepository) {
         this.projectService = projectService;
+        this.projectRepository = projectRepository;
     }
 
     @RequestMapping()
-    public ModelAndView index(@RequestParam("page") Optional<Integer> page,
-                              @RequestParam("size") Optional<Integer> size) {
+    public ModelAndView index(@ModelAttribute ProjectFilter projectFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("projects/index");
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
 
-        Page<Project> projects = projectService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Project> projects = projectRepository.findAll(projectFilter.buildQuery(), pageable);
         modelAndView.addObject("projects", projects);
-
-        int totalPages = projects.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            modelAndView.addObject("pageNumbers", pageNumbers);
-        }
+        modelAndView.addObject("filter", projectFilter);
 
         return modelAndView;
     }

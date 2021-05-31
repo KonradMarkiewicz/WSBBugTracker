@@ -56,6 +56,11 @@
                     </select>
                 </div>
                 <div class="col-auto">
+                    <input th:field="*{globalSearch}"
+                           class="form-control"
+                           th:placeholder="#{globalSearch.placeholder}"/>
+                </div>
+                <div class="col-auto">
                     <button class="btn btn-primary"
                             type="submit"
                             th:text="#{common.search}"></button>
@@ -69,14 +74,15 @@
         <table class="table table-striped table-dark">
             <thead>
             <tr>
-                <th th:text="#{issues.title}"></th>
-                <th th:text="#{issues.project}"></th>
-                <th th:text="#{issues.priority}"></th>
-                <th th:text="#{issues.assignee}"></th>
-                <th th:text="#{issues.state}"></th>
+                <th th:replace="issues/sortableColumn.html :: sortableColumn(${issues}, ${filter}, 'title')"></th>
+                <th th:replace="issues/sortableColumn.html :: sortableColumn(${issues}, ${filter}, 'project')"></th>
+                <th th:replace="issues/sortableColumn.html :: sortableColumn(${issues}, ${filter}, 'priority')"></th>
+                <th th:replace="issues/sortableColumn.html :: sortableColumn(${issues}, ${filter}, 'assignee')"></th>
+                <th th:replace="issues/sortableColumn.html :: sortableColumn(${issues}, ${filter}, 'state')"></th>
                 <th></th>
             </tr>
             </thead>
+
             <tr th:each="issue : ${issues}">
                 <td>
                     <a th:text="${issue.title}"
@@ -95,41 +101,35 @@
                     </div>
                 </td>
             </tr>
+
         </table>
 
-        <nav th:if="${issues.totalPages gt 1}">
+        <div th:if="${issues.totalPages > 0}" class="row">
             <ul class="pagination pagination-sm justify-content-center">
-                <li class="page-item"
-                    th:classappend="${issues.number eq 0} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/issues?page={id}(id=${issues.number lt 2 ? 1 : issues.number})}"
-                       aria-label="Previous"
-                       th:title="#{pagination.previous}"
-                       data-toggle="tooltip">
-                        <span aria-hidden="true">&laquo;</span>
+                <li th:if="${issues.number != 0}"
+                    class="page-item">
+                    <a th:href="@{'/issues?' + ${filter.toQueryString(issues.number - 1, issues.sort)}}"
+                       class="page-link">
+                        <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
-                <li class="page-item"
-                    th:classappend="${i eq issues.number + 1} ? 'active'"
-                    th:each="i : ${#numbers.sequence( 1, issues.totalPages, 1)}">
-                    <a class="page-link"
-                       th:href="@{/issues?page={id}(id=${i})}"
-                       th:text="${i}"
-                       th:title="#{pagination.page}+' '+${i}"
-                       data-toggle="tooltip"></a>
+
+                <li th:each="pageNumber : ${#numbers.sequence(T(Math).max(1, issues.number - 2), T(Math).min(issues.number + 4, issues.totalPages))}"
+                    th:class="${'page-item ' + ((pageNumber == issues.number + 1) ? 'active' : '')}">
+                    <a th:href="@{'/issues?' + ${filter.toQueryString(pageNumber - 1, issues.sort)}}"
+                       th:text="${pageNumber}"
+                       class="page-link"></a>
                 </li>
-                <li class="page-item"
-                    th:classappend="${issues.number + 1 eq issues.totalPages} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/issues?page={id}(id=${issues.number + 2})}"
-                       aria-label="Next"
-                       th:title="#{pagination.next}"
-                       data-toggle="tooltip">
-                        <span aria-hidden="true">&raquo;</span>
+
+                <li th:if="${issues.number != issues.totalPages - 1}"
+                    class="page-item">
+                    <a th:href="@{'/issues?' + ${filter.toQueryString(issues.number + 1, issues.sort)}}"
+                       class="page-link">
+                        <i class="fas fa-angle-right"></i>
                     </a>
                 </li>
             </ul>
-        </nav>
+        </div>
 
     </div>
 </section>
