@@ -3,6 +3,8 @@ package com.wsb.WSBBugTracker.people;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,6 @@ public class PersonController {
     @RequestMapping()
     public ModelAndView index(@ModelAttribute PersonFilter personFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("people/index");
-
         Page<Person> people = personRepository.findAll(personFilter.buildQuery(), pageable);
         modelAndView.addObject("people", people);
         modelAndView.addObject("filter", personFilter);
@@ -56,7 +57,6 @@ public class PersonController {
 
             return modelAndView;
         }
-
         personService.savePerson(person);
         attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/people");
@@ -115,4 +115,15 @@ public class PersonController {
         return modelAndView;
     }
 
+    @GetMapping("/myAccount")
+    ModelAndView showUserDetails() {
+        ModelAndView modelAndView = new ModelAndView("people/myAccount");
+        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String currentUserUsername = ((UserDetails)currentUser).getUsername();
+        Person person = personRepository.findByUsername(currentUserUsername);
+        modelAndView.addObject("authorities", personService.findAuthorities());
+        modelAndView.addObject("person", personService.editPerson(person.getId()));
+
+        return modelAndView;
+    }
 }

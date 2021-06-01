@@ -3,14 +3,9 @@ package com.wsb.WSBBugTracker.people;
 import com.wsb.WSBBugTracker.auth.Authority;
 import com.wsb.WSBBugTracker.auth.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -75,22 +70,4 @@ public class PersonService {
                 .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
     }
 
-    public Page<Person> findPaginated(Pageable pageable) {
-
-        List<Person> people = personRepository.findPersonByEnabledIsTrue();
-        List<Person> list;
-
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-
-        if (people.size() < startItem) {
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, people.size());
-            list = people.subList(startItem, toIndex);
-        }
-
-        return new PageImpl<>(list, PageRequest.of(currentPage, pageSize), people.size());
-    }
 }
