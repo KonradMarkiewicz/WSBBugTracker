@@ -3,14 +3,9 @@ package com.wsb.WSBBugTracker.people;
 import com.wsb.WSBBugTracker.auth.Authority;
 import com.wsb.WSBBugTracker.auth.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 

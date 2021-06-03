@@ -10,7 +10,7 @@
 <section class="container">
     <div layout:fragment="content">
         <form th:action="@{/login}" method="post" class="login-form">
-            <h1 th:text="#{login.label}"/>
+            <h1 th:text="#{login.label}"></h1>
 
             <div th:if="${param.logout}" class="alert alert-info">
                 <span th:text="#{login.loggedOut}"></span>

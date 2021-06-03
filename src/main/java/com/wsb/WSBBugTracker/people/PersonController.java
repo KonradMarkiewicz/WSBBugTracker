@@ -3,6 +3,8 @@ package com.wsb.WSBBugTracker.people;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +29,6 @@ public class PersonController {
     @RequestMapping()
     public ModelAndView index(@ModelAttribute PersonFilter personFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("people/index");
-
         Page<Person> people = personRepository.findAll(personFilter.buildQuery(), pageable);
         modelAndView.addObject("people", people);
         modelAndView.addObject("filter", personFilter);
@@ -57,7 +58,6 @@ public class PersonController {
 
             return modelAndView;
         }
-
         personService.savePerson(person);
         attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/people");
@@ -117,6 +117,17 @@ public class PersonController {
         return modelAndView;
     }
 
+    @GetMapping("/myAccount")
+    ModelAndView showUserDetails() {
+        ModelAndView modelAndView = new ModelAndView("people/myAccount");
+        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String currentUserUsername = ((UserDetails)currentUser).getUsername();
+        Person person = personRepository.findByUsername(currentUserUsername);
+        modelAndView.addObject("authorities", personService.findAuthorities());
+        modelAndView.addObject("personForm", personService.editPerson(person.getId()));
+
+        return modelAndView;
+    }
     @GetMapping("/editPassword/{id}")
     public String showUpdatePassForm(@PathVariable("id") long id, Model model) {
         PasswordForm passwordForm = new PasswordForm();
