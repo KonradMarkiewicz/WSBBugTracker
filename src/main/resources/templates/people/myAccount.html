@@ -6,14 +6,18 @@
 <head>
     <title th:text="#{tab.myAccount}"></title>
 </head>
+
 <body>
 <section class="container">
     <div layout:fragment="content">
         <h2 th:text="#{tab.myAccount}"></h2>
 
-        <form th:action="@{/people/update/{id}(id=${person.id})}"
-              th:object="${person}"
+        <form th:action="@{/people/update/{id}(id=${personForm.id})}"
+              th:object="${personForm}"
               method="post">
+
+            <input th:field="*{id}" type="hidden"/>
+
             <div class="row-cols-1">
                 <div class="mb-3">
                     <div>
@@ -67,40 +71,12 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <div>
-                        <label for="password"
-                               class="form-label"
-                               th:text="#{people.password}"></label>
-                    </div>
-                    <div>
-                        <input id="password"
-                               type="password"
-                               th:field="*{password}"
-                               placeholder="janko123"
-                               th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
-                        <small class="text-danger"
-                               th:if="${#fields.hasErrors('password')}"
-                               th:errors="*{password}"></small>
-                    </div>
+                    <a class="btn btn-success"
+                       th:href="@{'/people/editPassword/' + ${personForm.id}}"
+                       th:text="#{people.edit.password.label}"></a>
                 </div>
-                <div class="mb-3">
-                    <div>
-                        <label for="repeated-password"
-                               class="form-label"
-                               th:text="#{people.repeatedPassword}"></label>
-                    </div>
-                    <div>
-                        <input id="repeated-password"
-                               type="password"
-                               th:field="*{repeatedPassword}"
-                               placeholder="janko123"
-                               th:class="'form-control ' + ${#fields.hasErrors('repeatedPassword') ? 'is-invalid' : ''}"/>
-                        <small class="text-danger"
-                               th:if="${#fields.hasErrors('repeatedPassword')}"
-                               th:errors="*{repeatedPassword}"></small>
-                    </div>
-                </div>
-                <div class="mb-3" style="display: none;">
+                <div class="mb-3"
+                     th:if="${#authorization.expression('hasRole(''ROLE_AUTHORITY_MANAGEMENT'')')}">
                     <div>
                         <h5 class="form-label"
                             th:text="#{people.authorities}"></h5>
@@ -120,9 +96,10 @@
                         class="btn btn-primary"
                         th:text="#{common.save}"></button>
                 <a class="btn btn-secondary"
-                   th:href="@{/templates/people}"
+                   th:href="@{/people}"
                    th:text="#{common.cancel}"></a>
             </div>
+
         </form>
     </div>
 </section>

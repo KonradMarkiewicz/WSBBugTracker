@@ -124,7 +124,7 @@ public class PersonController {
         String currentUserUsername = ((UserDetails)currentUser).getUsername();
         Person person = personRepository.findByUsername(currentUserUsername);
         modelAndView.addObject("authorities", personService.findAuthorities());
-        modelAndView.addObject("person", personService.editPerson(person.getId()));
+        modelAndView.addObject("personForm", personService.editPerson(person.getId()));
 
         return modelAndView;
     }

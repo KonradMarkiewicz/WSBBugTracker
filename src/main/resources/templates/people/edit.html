@@ -73,7 +73,8 @@
                        th:href="@{'/people/editPassword/' + ${personForm.id}}"
                        th:text="#{people.edit.password.label}"></a>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3"
+                     th:if="${#authorization.expression('hasRole(''ROLE_AUTHORITY_MANAGEMENT'')')}">
                     <div>
                         <h5 class="form-label"
                                th:text="#{people.authorities}"></h5>
