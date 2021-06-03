@@ -7,7 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -25,12 +25,12 @@ public class Project {
     @ColumnDefault(value = "true")
     Boolean enabled = true;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 5, max = 255)
     @Column(nullable = false, unique = true)
     String name;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 5, max = 10000)
     @Column(columnDefinition = "TEXT")
     String content;

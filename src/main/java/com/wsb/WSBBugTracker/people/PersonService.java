@@ -59,6 +59,17 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    protected void savePerson(PersonForm personForm) {
+        Person person = personRepository.findById(personForm.id).orElse(null);
+        person.username = personForm.username;
+        person.email = personForm.email;
+        person.name = personForm.name;
+        person.setAuthorities(personForm.getAuthorities());
+        personRepository.save(person);
+
+        personRepository.save(person);
+    }
+
     protected List<Authority> findAuthorities() {
         return (List<Authority>) authorityRepository.findAll();
     }
@@ -75,22 +86,9 @@ public class PersonService {
                 .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
     }
 
-    public Page<Person> findPaginated(Pageable pageable) {
-
-        List<Person> people = personRepository.findPersonByEnabledIsTrue();
-        List<Person> list;
-
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-
-        if (people.size() < startItem) {
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, people.size());
-            list = people.subList(startItem, toIndex);
-        }
-
-        return new PageImpl<>(list, PageRequest.of(currentPage, pageSize), people.size());
+    public void updatePassword(PasswordForm passwordForm) {
+        Person person = personRepository.findById(passwordForm.id).orElse(null);
+        person.password = bCryptPasswordEncoder.encode(passwordForm.password);
+        personRepository.save(person);
     }
 }
