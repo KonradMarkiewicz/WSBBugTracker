@@ -15,6 +15,7 @@ public class PasswordForm {
     Long id;
 
     @NotBlank
+    @Size(min=5,max=100)
     String password;
 
     @NotBlank
