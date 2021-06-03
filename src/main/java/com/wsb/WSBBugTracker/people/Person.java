@@ -9,7 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -25,23 +25,24 @@ public class Person {
     @GeneratedValue
     Long id;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 5, max = 255)
     @Column(nullable = false, unique = true)
     String username;
 
     @Column(nullable = false)
+    @NotBlank
     String password;
 
     @Transient
     String repeatedPassword;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 5, max = 255)
     @Column(nullable = false)
     String name;
 
-    @NotEmpty
+    @NotBlank
     @Column(nullable = false)
     String email;
 
