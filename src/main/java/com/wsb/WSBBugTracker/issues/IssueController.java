@@ -2,6 +2,8 @@ package com.wsb.WSBBugTracker.issues;
 
 import com.wsb.WSBBugTracker.enums.Priority;
 import com.wsb.WSBBugTracker.enums.Type;
+import com.wsb.WSBBugTracker.mails.Mail;
+import com.wsb.WSBBugTracker.mails.MailService;
 import com.wsb.WSBBugTracker.people.PersonRepository;
 import com.wsb.WSBBugTracker.enums.State;
 import com.wsb.WSBBugTracker.projects.ProjectRepository;
@@ -15,10 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/issues")
@@ -28,12 +26,14 @@ public class IssueController {
     final PersonRepository personRepository;
     final ProjectRepository projectRepository;
     private final IssueService issueService;
+    private final MailService mailService;
 
-    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository, IssueService issueService) {
+    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository, IssueService issueService, MailService mailService) {
         this.issueRepository = issueRepository;
         this.personRepository = personRepository;
         this.projectRepository = projectRepository;
         this.issueService = issueService;
+        this.mailService = mailService;
     }
 
     @RequestMapping()
@@ -58,7 +58,7 @@ public class IssueController {
 
     @PostMapping("/save")
     @Secured("ROLE_CREATE_ISSUE")
-    ModelAndView createIssueUser(@ModelAttribute @Valid Issue issue, BindingResult result) {
+    ModelAndView createIssueUser(@ModelAttribute @Valid Issue issue, BindingResult result, Mail mail) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("issues/create");
@@ -67,6 +67,8 @@ public class IssueController {
             return getModelAndView(modelAndView);
         }
         issueService.saveIssue(issue);
+        issueService.sendNewIssueAssignedMail(issue);
+
         modelAndView.setViewName("redirect:/issues");
 
         return modelAndView;

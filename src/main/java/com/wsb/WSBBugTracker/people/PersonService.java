@@ -54,6 +54,17 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    protected void savePerson(PersonForm personForm) {
+        Person person = personRepository.findById(personForm.id).orElse(null);
+        person.username = personForm.username;
+        person.email = personForm.email;
+        person.name = personForm.name;
+        person.setAuthorities(personForm.getAuthorities());
+        personRepository.save(person);
+
+        personRepository.save(person);
+    }
+
     protected List<Authority> findAuthorities() {
         return (List<Authority>) authorityRepository.findAll();
     }
@@ -70,4 +81,9 @@ public class PersonService {
                 .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe Id użytkownika: " + id));
     }
 
+    public void updatePassword(PasswordForm passwordForm) {
+        Person person = personRepository.findById(passwordForm.id).orElse(null);
+        person.password = bCryptPasswordEncoder.encode(passwordForm.password);
+        personRepository.save(person);
+    }
 }

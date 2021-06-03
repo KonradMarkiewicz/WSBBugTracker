@@ -6,6 +6,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,25 +70,26 @@ public class PersonController {
     ModelAndView showEditUserForm(@ModelAttribute @PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("people/edit");
         modelAndView.addObject("authorities", personService.findAuthorities());
-        modelAndView.addObject("person", personService.editPerson(id));
+        modelAndView.addObject("personForm", new PersonForm(personService.editPerson(id)));
 
         return modelAndView;
     }
 
     @PostMapping("/update/{id}")
     @Secured("ROLE_EDIT_USER")
-    ModelAndView updateUser(@PathVariable("id") Long id, @Valid Person person,
+    ModelAndView updateUser(@PathVariable("id") Long id, @Valid PersonForm personForm,
                             BindingResult result, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.addObject("authorities", personService.findAuthorities());
-            person.setId(id);
+            modelAndView.addObject("personForm", personForm);
+            personForm.setId(id);
             modelAndView.setViewName("people/edit");
 
             return modelAndView;
         }
 
-        personService.savePerson(person);
+        personService.savePerson(personForm);
         attributes.addAttribute("update", "success");
         modelAndView.setViewName("redirect:/people");
 
@@ -126,4 +128,25 @@ public class PersonController {
 
         return modelAndView;
     }
+    @GetMapping("/editPassword/{id}")
+    public String showUpdatePassForm(@PathVariable("id") long id, Model model) {
+        PasswordForm passwordForm = new PasswordForm();
+        passwordForm.setId(id);
+        model.addAttribute("passwordForm", passwordForm);
+        return "people/password";
+    }
+
+    @PostMapping("/updatePassword/{id}")
+    public String updatePassword(@PathVariable("id") long id, @Valid PasswordForm passwordForm,
+                                 BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            passwordForm.setId(id);
+            model.addAttribute("passwordForm", passwordForm);
+            return "people/password";
+        }
+        personService.updatePassword(passwordForm);
+        System.out.println("saved");
+        return "redirect:/people";
+    }
+
 }
