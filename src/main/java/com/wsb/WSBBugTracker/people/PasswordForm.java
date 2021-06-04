@@ -1,5 +1,6 @@
 package com.wsb.WSBBugTracker.people;
 
+import com.wsb.WSBBugTracker.validators.ValidPasswords;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ValidPasswords
 public class PasswordForm {
 
     Long id;
@@ -18,19 +20,7 @@ public class PasswordForm {
     @Size(min=5,max=100)
     String password;
 
-    @NotBlank
     @Transient
     String repeatedPassword;
 
-    boolean isValid;
-
-    @AssertTrue(message = "Hasła powinny być identyczne")
-    public boolean isValid() {
-        if (password == null)
-            return false;
-        if (repeatedPassword == null)
-            return false;
-        else
-            return this.password.equals(this.repeatedPassword);
-    }
 }
