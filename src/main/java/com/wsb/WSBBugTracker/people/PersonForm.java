@@ -1,6 +1,7 @@
 package com.wsb.WSBBugTracker.people;
 
 import com.wsb.WSBBugTracker.auth.Authority;
+import com.wsb.WSBBugTracker.validators.UniqueUsername;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@UniqueUsername
 public class PersonForm {
 
     Long id;
