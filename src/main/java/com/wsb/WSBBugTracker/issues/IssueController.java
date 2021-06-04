@@ -3,7 +3,6 @@ package com.wsb.WSBBugTracker.issues;
 import com.wsb.WSBBugTracker.enums.Priority;
 import com.wsb.WSBBugTracker.enums.Type;
 import com.wsb.WSBBugTracker.mails.Mail;
-import com.wsb.WSBBugTracker.mails.MailService;
 import com.wsb.WSBBugTracker.people.PersonRepository;
 import com.wsb.WSBBugTracker.enums.State;
 import com.wsb.WSBBugTracker.projects.ProjectRepository;
@@ -26,14 +25,12 @@ public class IssueController {
     final PersonRepository personRepository;
     final ProjectRepository projectRepository;
     private final IssueService issueService;
-    private final MailService mailService;
 
-    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository, IssueService issueService, MailService mailService) {
+    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository, IssueService issueService) {
         this.issueRepository = issueRepository;
         this.personRepository = personRepository;
         this.projectRepository = projectRepository;
         this.issueService = issueService;
-        this.mailService = mailService;
     }
 
     @RequestMapping()
