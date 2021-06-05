@@ -24,6 +24,7 @@ public class ProjectController {
     }
 
     @RequestMapping()
+    @Secured("ROLE_PROJECTS_TAB")
     public ModelAndView index(@ModelAttribute ProjectFilter projectFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("projects/index");
 

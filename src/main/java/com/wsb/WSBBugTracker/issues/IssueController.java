@@ -26,17 +26,16 @@ public class IssueController {
     final PersonRepository personRepository;
     final ProjectRepository projectRepository;
     private final IssueService issueService;
-    private final MailService mailService;
 
-    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository, IssueService issueService, MailService mailService) {
+    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, ProjectRepository projectRepository, IssueService issueService) {
         this.issueRepository = issueRepository;
         this.personRepository = personRepository;
         this.projectRepository = projectRepository;
         this.issueService = issueService;
-        this.mailService = mailService;
     }
 
     @RequestMapping()
+    @Secured("ROLE_ISSUES_TAB")
     public ModelAndView index(@ModelAttribute IssueFilter issueFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("issues/index");
 
