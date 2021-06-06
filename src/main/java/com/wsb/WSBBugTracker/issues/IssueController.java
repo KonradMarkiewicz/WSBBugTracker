@@ -34,6 +34,7 @@ public class IssueController {
     }
 
     @RequestMapping()
+    @Secured("ROLE_ISSUES_TAB")
     public ModelAndView index(@ModelAttribute IssueFilter issueFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("issues/index");
 

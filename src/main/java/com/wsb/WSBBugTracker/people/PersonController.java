@@ -27,6 +27,7 @@ public class PersonController {
     }
 
     @RequestMapping()
+    @Secured("ROLE_USERS_TAB")
     public ModelAndView index(@ModelAttribute PersonFilter personFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("people/index");
         Page<Person> people = personRepository.findAll(personFilter.buildQuery(), pageable);
