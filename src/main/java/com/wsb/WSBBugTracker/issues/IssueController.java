@@ -56,7 +56,8 @@ public class IssueController {
 
     @PostMapping("/save")
     @Secured("ROLE_CREATE_ISSUE")
-    ModelAndView createIssueUser(@ModelAttribute @Valid Issue issue, BindingResult result, Mail mail) {
+    ModelAndView createIssueUser(@ModelAttribute @Valid Issue issue, BindingResult result,
+                                 RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("issues/create");
@@ -66,6 +67,7 @@ public class IssueController {
         }
         issueService.saveIssue(issue);
         issueService.sendNewIssueAssignedMail(issue);
+        attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/issues");
 
         return modelAndView;
@@ -113,9 +115,10 @@ public class IssueController {
 
     @GetMapping("/delete/{id}")
     @Secured("ROLE_DELETE_PROJECT")
-    ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id) {
+    ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         issueService.deleteIssue(id);
+        attributes.addAttribute("delete", "success");
         modelAndView.setViewName("redirect:/issues");
 
         return modelAndView;
