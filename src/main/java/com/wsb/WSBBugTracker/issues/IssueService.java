@@ -33,13 +33,15 @@ public class IssueService {
 
     public void sendNewIssueAssignedMail(Issue issue) {
         Mail mail = new Mail();
-        if (!issue.getAssignee().getEmail().isEmpty()) {
-            mail.setRecipient(issue.getAssignee().getEmail());
+        var recipient = issue.getAssignee();
+        if (recipient != null) {
+            mail.setRecipient(recipient.getEmail());
             mail.setSubject("Zostało przypisane nowe zgłoszenie");
             mail.setContent("Tytuł przypisanego zadania: " + issue.getTitle() +
                     "\nProjekt przypisanego zadania: " + issue.getProject().getName() +
                     "\nTreść zadania: " + issue.getContent());
             mailService.send(mail);
+            System.out.println("Wysyłam powiadomienie o przypisaniu do zgłoszenia na adres " + recipient.getEmail());
         } else
             System.out.println("Przypisany do zgłoszenia użytkownik nie posiada adresu email, nie wysyłam wiadomości");
     }

@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -44,6 +45,7 @@ public class Person {
 
     @NotBlank
     @Column(nullable = false)
+    @Email
     String email;
 
     @Column(nullable = false)

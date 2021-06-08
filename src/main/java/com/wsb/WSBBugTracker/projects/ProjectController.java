@@ -27,7 +27,6 @@ public class ProjectController {
     @Secured("ROLE_PROJECTS_TAB")
     public ModelAndView index(@ModelAttribute ProjectFilter projectFilter, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("projects/index");
-
         Page<Project> projects = projectRepository.findAll(projectFilter.buildQuery(), pageable);
         modelAndView.addObject("projects", projects);
         modelAndView.addObject("filter", projectFilter);
@@ -46,15 +45,16 @@ public class ProjectController {
 
     @PostMapping("/save")
     @Secured("ROLE_CREATE_PROJECT")
-    ModelAndView createNewProject(@ModelAttribute @Valid Project project, BindingResult result) {
+    ModelAndView createNewProject(@ModelAttribute @Valid Project project, BindingResult result,
+                                  RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("projects/create");
 
             return modelAndView;
         }
-
         projectService.saveProject(project);
+        attributes.addAttribute("create", "success");
         modelAndView.setViewName("redirect:/projects");
 
         return modelAndView;
@@ -80,7 +80,6 @@ public class ProjectController {
 
             return modelAndView;
         }
-
         projectService.saveProject(project);
         attributes.addAttribute("update", "success");
         modelAndView.setViewName("redirect:/projects");
@@ -90,9 +89,10 @@ public class ProjectController {
 
     @GetMapping("/delete/{id}")
     @Secured("ROLE_DELETE_PROJECT")
-    ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id) {
+    ModelAndView deleteProject(@ModelAttribute @PathVariable("id") Long id, RedirectAttributes attributes) {
         ModelAndView modelAndView = new ModelAndView();
         projectService.deleteProject(id);
+        attributes.addAttribute("delete", "success");
         modelAndView.setViewName("redirect:/projects");
 
         return modelAndView;
