@@ -66,7 +66,6 @@ public class IssueController {
         }
         issueService.saveIssue(issue);
         issueService.sendNewIssueAssignedMail(issue);
-
         modelAndView.setViewName("redirect:/issues");
 
         return modelAndView;
@@ -105,6 +104,7 @@ public class IssueController {
         }
 
         issueService.saveIssue(issue);
+        issueService.sendNewIssueAssignedMail(issue);
         attributes.addAttribute("update", "success");
         modelAndView.setViewName("redirect:/issues");
 
