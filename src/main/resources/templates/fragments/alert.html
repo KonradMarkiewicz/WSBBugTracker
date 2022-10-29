@@ -3,15 +3,15 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<div class="alert alert-dismissable"
-     th:if="${message}"
-     th:fragment="alert (type, message)"
-     th:classappend="'alert-' + ${type}">
-
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <span th:text="${message}">Test</span>
-
-</div>
+    <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info">
+        <span th:text="#{common.create.success}"></span>
+    </div>
+    <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-danger">
+        <span th:text="#{common.delete.success}"></span>
+    </div>
+    <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-success">
+        <span th:text="#{common.update.success}"></span>
+    </div>
 
 </body>
 </html>

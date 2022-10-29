@@ -22,15 +22,7 @@
             </div>
         </h2>
 
-        <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info">
-            <span th:text="#{people.create.success}"></span>
-        </div>
-        <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-danger">
-            <span th:text="#{people.delete.success}"></span>
-        </div>
-        <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-success">
-            <span th:text="#{people.update.success}"></span>
-        </div>
+        <div th:insert="fragments/alert"></div>
 
         <form th:action="@{/people}"
               th:object="${filter}">
