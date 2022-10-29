@@ -3,6 +3,15 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 
+    <div th:if="${param.logout}" class="alert alert-info alert-dismissible fade show">
+        <span th:text="#{login.loggedOut}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show">
+        <span th:text="#{login.error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info alert-dismissible fade show">
         <span th:text="#{common.create.success}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
