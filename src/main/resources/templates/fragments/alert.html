@@ -3,14 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 
-    <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info">
+    <div th:if="${#strings.toString(param.create)} == 'success'" class="alert alert-info alert-dismissible fade show">
         <span th:text="#{common.create.success}"></span>
     </div>
-    <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-danger">
+    <div th:if="${#strings.toString(param.delete)} == 'success'" class="alert alert-danger alert-dismissible fade show">
         <span th:text="#{common.delete.success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-success">
+    <div th:if="${#strings.toString(param.update)} == 'success'" class="alert alert-success alert-dismissible fade show">
         <span th:text="#{common.update.success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
 </body>
