@@ -79,7 +79,7 @@
             <ul class="pagination pagination-sm justify-content-center">
                 <li th:if="${projects.number != 0}"
                     class="page-item">
-                    <a th:href="@{'/projects?' + ${filter.toQueryString(projects.number - 1, people.sort)}}"
+                    <a th:href="@{'/projects?' + ${filter.toQueryString(projects.number - 1, projects.sort)}}"
                        class="page-link">
                         <i class="fas fa-angle-left"></i>
                     </a>
