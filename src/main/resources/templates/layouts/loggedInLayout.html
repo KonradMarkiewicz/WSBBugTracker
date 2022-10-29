@@ -31,8 +31,6 @@
 
 <div class="container">
 
-    <!--    <div th:insert="fragments/alert :: alert (type=${type}, message=${message})"></div>-->
-
     <div layout:fragment="content">
         <!-- ============================================================================ -->
         <!-- This content is only used for static prototyping purposes (natural templates)-->
@@ -49,28 +47,8 @@
         </p>
     </div>
 
-    <div th:insert="fragments/footer :: ${isAdmin} ? 'footer-admin' : 'footer'">...</div>
+    <div th:insert="fragments/footer :: footer">...</div>
 </div>
-
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    function validate() {
-        'use strict'
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-    // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    }
-</script>
 
 </body>
 </html>

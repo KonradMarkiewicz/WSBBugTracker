@@ -3,12 +3,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<div class="footer" th:fragment="footer">
+<div class="footer" th:fragment="footer" style="text-align:center">
     &copy; 2021 Konrad Markiewicz
-</div>
-<div th:fragment="footer-admin">
-    <hr/>
-    &copy; 2021 Konrad Markiewicz - Admin
+    <span><a th:text="#{contact.label}"
+             th:href="@{/contact}"></a></span>
 </div>
 
 </body>
